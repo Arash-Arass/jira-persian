@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<atlassian-plugin key="ir.arasstech.persian.jsm" name="Arass Tech Persian for Jira Service Management" plugins-version="2">
+
+    <plugin-info>
+        <description>Persian (فارسی) for Jira Service Management Data Center by Arass Tech: Persian locale with full translation of Jira and Jira Service Management, Vazirmatn typeface, right-to-left layout and Jalali (Shamsi) dates and date picker for Persian users. Free and open source (MIT license).</description>
+        <version>1.2.0</version>
+        <vendor name="Arass Tech" url="https://arasstech.ir"/>
+        <param name="plugin-icon">images/plugin-icon.png</param>
+        <param name="plugin-logo">images/plugin-logo.png</param>
+        <param name="plugin-banner">images/plugin-banner.png</param>
+        <param name="vendor-icon">images/vendor-icon.png</param>
+        <param name="vendor-logo">images/vendor-logo.png</param>
+        <param name="atlassian-data-center-status">compatible</param>
+        <param name="atlassian-data-center-compatible">true</param>
+        <param name="configure.url">/plugins/servlet/atp/admin</param>
+    </plugin-info>
+
+    <!-- Makes "Persian (Iran)" selectable in every user's profile language list -->
+    <language key="fa_IR" name="Persian (Iran)" language="fa" country="IR"/>
+
+    <!-- Persian translations: Jira Service Management + Assets (keys override the English fallback for fa_IR users) -->
+    <resource type="i18n" name="atp-i18n-jsm" location="i18n/atp-jsm"/>
+    <resource type="i18n" name="atp-i18n-assets" location="i18n/atp-assets"/>
+    <!-- Persian names of common statuses, priorities, resolutions and issue types (Jira's name-based convention) -->
+    <resource type="i18n" name="atp-i18n-constants" location="i18n/atp-constants"/>
+    <!-- This app's own labels (English base + Persian) -->
+    <resource type="i18n" name="atp-i18n-app" location="i18n/atp-app"/>
+
+    <!-- Persian translations: Jira core (same bundle locations as the official language packs) -->
+    <resource type="i18n" name="atp-core-0" location="apdex"/>
+    <resource type="i18n" name="atp-core-1" location="atlassian-authentication-plugin"/>
+    <resource type="i18n" name="atp-core-2" location="batching-i18n"/>
+    <resource type="i18n" name="atp-core-3" location="cleanup-hub"/>
+    <resource type="i18n" name="atp-core-4" location="cluster-monitoring"/>
+    <resource type="i18n" name="atp-core-5" location="com/atlassian/activeobjects/admin/ActiveObjectsAdmin"/>
+    <resource type="i18n" name="atp-core-6" location="com/atlassian/administration/quicksearch/i18n/quicksearch"/>
+    <resource type="i18n" name="atp-core-7" location="com/atlassian/administration/quicksearch/jira/i18n/jira-aliases"/>
+    <resource type="i18n" name="atp-core-8" location="com/atlassian/applinks/applinks"/>
+    <resource type="i18n" name="atp-core-9" location="com/atlassian/applinks/applinks-edit"/>
+    <resource type="i18n" name="atp-core-10" location="com/atlassian/applinks/applinks-rest"/>
+    <resource type="i18n" name="atp-core-11" location="com/atlassian/applinks/applinks-service"/>
+    <resource type="i18n" name="atp-core-12" location="com/atlassian/applinks/applinks-status"/>
+    <resource type="i18n" name="atp-core-13" location="com/atlassian/applinks/entitylinks"/>
+    <resource type="i18n" name="atp-core-14" location="com/atlassian/applinks/internal/common/applinks-service-common"/>
+    <resource type="i18n" name="atp-core-15" location="com/atlassian/crowd/embedded/admin/EmbeddedCrowdAdmin"/>
+    <resource type="i18n" name="atp-core-16" location="com/atlassian/feedback/jira-feedback-plugin"/>
+    <resource type="i18n" name="atp-core-17" location="com/atlassian/gadgets/dashboard/internal/i18n"/>
+    <resource type="i18n" name="atp-core-18" location="com/atlassian/gadgets/directory/internal/i18n"/>
+    <resource type="i18n" name="atp-core-19" location="com/atlassian/gadgets/oauth/serviceprovider/internal/i18n"/>
+    <resource type="i18n" name="atp-core-20" location="com/atlassian/gadgets/renderer/internal/servlet/i18n"/>
+    <resource type="i18n" name="atp-core-21" location="com/atlassian/jira/gadgets/i18n"/>
+    <resource type="i18n" name="atp-core-22" location="com/atlassian/jira/jira-issue-nav-components/i18n"/>
+    <resource type="i18n" name="atp-core-23" location="com/atlassian/jira/jira-issue-nav-plugin/i18n"/>
+    <resource type="i18n" name="atp-core-24" location="com/atlassian/jira/jira-projects-issue-navigator/i18n"/>
+    <resource type="i18n" name="atp-core-25" location="com/atlassian/jira/plugins/importer/web/action/util/messages"/>
+    <resource type="i18n" name="atp-core-26" location="com/atlassian/jira/plugins/mail/messages"/>
+    <resource type="i18n" name="atp-core-27" location="com/atlassian/jira/projects/jira-projects-i18n"/>
+    <resource type="i18n" name="atp-core-28" location="com/atlassian/jira/web/action/JiraWebActionSupport"/>
+    <resource type="i18n" name="atp-core-29" location="com/atlassian/jirawallboard/i18n"/>
+    <resource type="i18n" name="atp-core-30" location="com/atlassian/mywork/mywork-common"/>
+    <resource type="i18n" name="atp-core-31" location="com/atlassian/mywork/providers/jira/i18n"/>
+    <resource type="i18n" name="atp-core-32" location="com/atlassian/mywork/providers/jira/registration-i18n"/>
+    <resource type="i18n" name="atp-core-33" location="com/atlassian/oauth/serviceprovider/internal/i18n"/>
+    <resource type="i18n" name="atp-core-34" location="com/atlassian/plugins/helptips/i18n"/>
+    <resource type="i18n" name="atp-core-35" location="com/atlassian/plugins/navlink/navlink-i18n"/>
+    <resource type="i18n" name="atp-core-36" location="com/atlassian/streams/inline-actions/i18n"/>
+    <resource type="i18n" name="atp-core-37" location="com/atlassian/streams/internal/i18n"/>
+    <resource type="i18n" name="atp-core-38" location="com/atlassian/streams/jira/i18n"/>
+    <resource type="i18n" name="atp-core-39" location="com/atlassian/streams/jira/inline-actions/i18n"/>
+    <resource type="i18n" name="atp-core-40" location="com/atlassian/streams/thirdparty/i18n"/>
+    <resource type="i18n" name="atp-core-41" location="com/atlassian/upm/i18n"/>
+    <resource type="i18n" name="atp-core-42" location="com/atlassian/wfshare/i18n"/>
+    <resource type="i18n" name="atp-core-43" location="core-i18n"/>
+    <resource type="i18n" name="atp-core-44" location="editor-i18n"/>
+    <resource type="i18n" name="atp-core-45" location="event-plugin"/>
+    <resource type="i18n" name="atp-core-46" location="i18n"/>
+    <resource type="i18n" name="atp-core-47" location="i18n-gadgets-publisher"/>
+    <resource type="i18n" name="atp-core-48" location="i18n-rest"/>
+    <resource type="i18n" name="atp-core-49" location="i18n/LookAndFeel"/>
+    <resource type="i18n" name="atp-core-50" location="i18n/analytics-client"/>
+    <resource type="i18n" name="atp-core-51" location="i18n/atlassian-audit-backend"/>
+    <resource type="i18n" name="atp-core-52" location="i18n/atlassian-audit-common"/>
+    <resource type="i18n" name="atp-core-53" location="i18n/atlassian-audit-frontend"/>
+    <resource type="i18n" name="atp-core-54" location="i18n/atlassian-audit-onboarding"/>
+    <resource type="i18n" name="atp-core-55" location="i18n/atlassian-diagnostics"/>
+    <resource type="i18n" name="atp-core-56" location="i18n/atlassian-diagnostics-core"/>
+    <resource type="i18n" name="atp-core-57" location="i18n/atlassian-diagnostics-platform"/>
+    <resource type="i18n" name="atp-core-58" location="i18n/atlassian-theme"/>
+    <resource type="i18n" name="atp-core-59" location="i18n/atlassian-webhooks"/>
+    <resource type="i18n" name="atp-core-60" location="i18n/baseurl_i18n"/>
+    <resource type="i18n" name="atp-core-61" location="i18n/healthchecks"/>
+    <resource type="i18n" name="atp-core-62" location="i18n/i18n"/>
+    <resource type="i18n" name="atp-core-63" location="i18n/i18n-bamboo-scopes"/>
+    <resource type="i18n" name="atp-core-64" location="i18n/i18n-bitbucket-scopes"/>
+    <resource type="i18n" name="atp-core-65" location="i18n/i18n-confluence-scopes"/>
+    <resource type="i18n" name="atp-core-66" location="i18n/i18n-jira-scopes"/>
+    <resource type="i18n" name="atp-core-67" location="i18n/i18n-oauth2"/>
+    <resource type="i18n" name="atp-core-68" location="i18n/i18n-oauth2-provider"/>
+    <resource type="i18n" name="atp-core-69" location="i18n/i18n-pats"/>
+    <resource type="i18n" name="atp-core-70" location="i18n/i18n-refapp-scopes"/>
+    <resource type="i18n" name="atp-core-71" location="i18n/jira-atlassian-diagnostics"/>
+    <resource type="i18n" name="atp-core-72" location="i18n/jira-cluster-monitoring-plugin"/>
+    <resource type="i18n" name="atp-core-73" location="i18n/jira-header-plugin"/>
+    <resource type="i18n" name="atp-core-74" location="i18n/jira-healthcheck-plugin"/>
+    <resource type="i18n" name="atp-core-75" location="i18n/jira-mobile-rest-i18n"/>
+    <resource type="i18n" name="atp-core-76" location="i18n/jira-my-home-plugin"/>
+    <resource type="i18n" name="atp-core-77" location="i18n/jira-share-plugin"/>
+    <resource type="i18n" name="atp-core-78" location="i18n/manage-applications"/>
+    <resource type="i18n" name="atp-core-79" location="i18n/ratelimiting"/>
+    <resource type="i18n" name="atp-core-80" location="i18n/troubleshooting"/>
+    <resource type="i18n" name="atp-core-81" location="i18n/tzdetect-i18n"/>
+    <resource type="i18n" name="atp-core-82" location="i18n/webhooks"/>
+    <resource type="i18n" name="atp-core-83" location="i18n/whereismycf"/>
+    <resource type="i18n" name="atp-core-84" location="issue-update-batch-mail"/>
+    <resource type="i18n" name="atp-core-85" location="jira-admin-updates-plugin"/>
+    <resource type="i18n" name="atp-core-86" location="jira-atst-healthcheck-plugin"/>
+    <resource type="i18n" name="atp-core-87" location="jira-auditing-plugin"/>
+    <resource type="i18n" name="atp-core-88" location="jira-core-project-templates"/>
+    <resource type="i18n" name="atp-core-89" location="jira-initial-watchers-plugin"/>
+    <resource type="i18n" name="atp-core-90" location="jira-inline-issue-create-plugin"/>
+    <resource type="i18n" name="atp-core-91" location="jira-invite-user-plugin"/>
+    <resource type="i18n" name="atp-core-92" location="jira-issue-link-applinks-common-plugin"/>
+    <resource type="i18n" name="atp-core-93" location="jira-issue-link-confluence-plugin"/>
+    <resource type="i18n" name="atp-core-94" location="jira-issue-link-remote-jira-plugin"/>
+    <resource type="i18n" name="atp-core-95" location="jira-issue-link-web-plugin"/>
+    <resource type="i18n" name="atp-core-96" location="jira-migration-plugin"/>
+    <resource type="i18n" name="atp-core-97" location="jira-onboarding-assets-plugin"/>
+    <resource type="i18n" name="atp-core-98" location="jira-optimizer-plugin"/>
+    <resource type="i18n" name="atp-core-99" location="jira-password-policy-plugin"/>
+    <resource type="i18n" name="atp-core-100" location="jira-project-config-plugin"/>
+    <resource type="i18n" name="atp-core-101" location="jira-pulp-plugin-i18n"/>
+    <resource type="i18n" name="atp-core-102" location="jira-quick-edit-plugin"/>
+    <resource type="i18n" name="atp-core-103" location="jira-quicksearch-plugin"/>
+    <resource type="i18n" name="atp-core-104" location="jira-view-issue-plugin"/>
+    <resource type="i18n" name="atp-core-105" location="jira/i18n"/>
+    <resource type="i18n" name="atp-core-106" location="lighthouse-plugin-i18n"/>
+    <resource type="i18n" name="atp-core-107" location="monitor-i18n"/>
+    <resource type="i18n" name="atp-core-108" location="node_modules/@atlassian/fileviewer/lib/i18n/translations-en"/>
+    <resource type="i18n" name="atp-core-109" location="project-creation"/>
+    <resource type="i18n" name="atp-core-110" location="project-creation-i18n"/>
+    <resource type="i18n" name="atp-core-111" location="project-templates-plugin"/>
+    <resource type="i18n" name="atp-core-112" location="static-assets-url"/>
+    <resource type="i18n" name="atp-core-113" location="user-profile-i18n"/>
+    <resource type="i18n" name="atp-core-114" location="whisper-i18n"/>
+    <resource type="i18n" name="atp-core-115" location="wiki-editor"/>
+    <!-- /core -->
+
+    <resource type="download" name="images/" location="images/"/>
+
+    <!-- Typeface for everyone (Persian glyphs only); RTL layout only for Persian users -->
+    <web-resource key="atp-ui" name="Arass Tech Persian UI layer">
+        <resource type="download" name="atp-core.css" location="css/atp-core.css"/>
+        <resource type="download" name="atp-rtl.css" location="css/atp-rtl.css"/>
+        <resource type="download" name="atp-theme.css" location="css/atp-theme.css"/>
+        <resource type="download" name="atp-mirror.js" location="js/atp-mirror.js"/>
+        <resource type="download" name="atp-boot.js" location="js/atp-boot.js"/>
+        <resource type="download" name="atp-dates.js" location="js/atp-dates.js"/>
+        <dependency>com.atlassian.plugins.atlassian-plugins-webresource-plugin:data</dependency>
+        <data key="settings" class="ir.arasstech.persian.SettingsDataProvider"/>
+        <context>atl.general</context>
+        <context>atl.admin</context>
+        <context>atl.popup</context>
+        <context>customerportal</context>
+        <context>com.atlassian.streams:streamsGadgetResources</context>
+    </web-resource>
+
+    <!-- Settings page: Administration → Manage apps → Arass Tech Persian -->
+    <web-resource key="atp-admin" name="Arass Tech Persian settings page">
+        <resource type="download" name="atp-admin.css" location="admin/atp-admin.css"/>
+        <resource type="download" name="atp-admin.js" location="admin/atp-admin.js"/>
+    </web-resource>
+
+    <!-- Every translated text with its English source; never required by a page, the settings page loads it on demand -->
+    <web-resource key="atp-catalog" name="Arass Tech Persian translation catalog">
+        <resource type="download" name="atp-catalog.js" location="admin/atp-catalog.js">
+            <param name="batch" value="false"/>
+        </resource>
+    </web-resource>
+
+    <servlet key="atp-servlet" name="Arass Tech Persian settings" class="ir.arasstech.persian.AtpServlet">
+        <description>Settings page and its JSON API (Jira administrators only).</description>
+        <url-pattern>/atp/*</url-pattern>
+    </servlet>
+
+    <web-item key="atp-admin-link" name="Arass Tech Persian settings link" section="admin_plugins_menu/upm_section" weight="150">
+        <label key="atp.admin.menu"/>
+        <tooltip key="atp.admin.menu.tooltip"/>
+        <link linkId="atp-admin-link">/plugins/servlet/atp/admin</link>
+    </web-item>
+
+    <!-- The administrator's own wording replaces the bundled Persian text, everywhere Jira translates on the server -->
+    <translation-transform key="atp-overrides" name="Arass Tech Persian custom wording" class="ir.arasstech.persian.OverrideTransform" order="100"/>
+
+</atlassian-plugin>

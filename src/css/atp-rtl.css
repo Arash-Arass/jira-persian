@@ -1,0 +1,61 @@
+/*! Arass Tech Persian · RTL layer v0.2.0 (active only for Persian users; the mirror engine handles the rest) */
+
+html.atp-rtl body { direction: rtl; }
+
+/* Customer portal headers */
+html.atp-rtl :is(.cv-smart-portal-title-container, .cv-global-level-header, .cv-global-level-title,
+                 .cv-page-title-main, .cv-page-title-text, .cv-description, .header-web-panels,
+                 .subheader-web-panels, .aui-page-header-main) {
+    text-align: right;
+}
+
+/* English sentences that are not translated keep correct punctuation */
+html.atp-rtl :is(.cv-description p, .cv-page-title-text, label, .description, .cv-help-text) {
+    unicode-bidi: plaintext;
+}
+
+/* Forms */
+html.atp-rtl :is(textarea, select) { text-align: start; }
+html.atp-rtl input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) { text-align: right; }
+html.atp-rtl .aui-select2-container .select2-choice > .select2-chosen { text-align: right; }
+html.atp-rtl :is(input[type="email"], input[type="url"], input[name*="email" i], input[name*="url" i], input[name*="host" i]) {
+    direction: ltr;
+    text-align: right;
+}
+
+/* Code, keys and editors always read left-to-right */
+html.atp-rtl :is(pre, code, kbd, samp, tt, .CodeMirror, .ace_editor, .codeContent, .preformattedContent,
+                 .code-block, #advanced-search) {
+    direction: ltr;
+    text-align: left;
+    unicode-bidi: isolate;
+}
+
+/* The same for the React screens' chevrons (Atlassian Design System glyphs, e.g. the queue sidebar's collapse button) */
+html.atp-rtl svg:has(> path[d^="M13.706 9.698"]),
+html.atp-rtl svg:has(> path[d^="M10.294 9.698"]) { transform: scaleX(-1); }
+
+/* Icons whose meaning is a direction (back/forward, expand, next/previous) are mirrored */
+html.atp-rtl :is([class*="iconfont-chevron-left"], [class*="iconfont-chevron-right"],
+                 [class*="iconfont-chevron-double-left"], [class*="iconfont-chevron-double-right"],
+                 [class*="iconfont-arrow-left"], [class*="iconfont-arrow-right"],
+                 [class*="iconfont-arrows-left"], [class*="iconfont-arrows-right"],
+                 .aui-iconfont-back-page, .aui-iconfont-forward-page,
+                 [class*="iconfont-indent"], [class*="iconfont-outdent"])::before {
+    display: inline-block;
+    transform: scaleX(-1);
+}
+
+/* Issue keys, versions and other LTR tokens inside Persian text stay intact */
+html.atp-rtl :is(.issue-link, .issuekey, a.issue-link, [data-issue-key]) {
+    unicode-bidi: isolate;
+}
+
+/* Jira Service Management: queue-sidebar collapse button (positioned by script from the left) */
+html.atp-rtl .sd-queues .aui-page-panel-nav > div[style*="left"] {
+    left: auto !important;
+    margin-right: auto;
+}
+
+/* Issue navigator: the filter-panel resize handle only understands left-to-right dragging */
+html.atp-rtl .navigator-sidebar > .ui-sidebar.ui-draggable { display: none; }

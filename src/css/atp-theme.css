@@ -1,0 +1,611 @@
+/*! Arass Tech Persian · Arass Light theme · v1.1.0 · (c) Arass Tech
+ *  A light, quiet surface for Jira and Jira Service Management: one palette, soft depth, clear hierarchy.
+ *  Everything is scoped to html.atp-theme and skipped when the user picked Jira's dark theme. */
+
+/* ───────────────────────────── 1 · palette and platform variables ───────────────────────────── */
+html.atp-theme.atp-theme:not([data-color-mode="dark"]) {
+    --atp-bg: #F5F5F7;
+    --atp-surface: #FFFFFF;
+    --atp-sunken: #FAFAFB;
+    --atp-ink: #0B1324;
+    --atp-ink-2: #1D2944;
+    --atp-text: #0B1324;
+    --atp-text-2: #4B5568;
+    --atp-text-3: #6B7487;
+    --atp-line: rgba(11, 19, 36, .08);
+    --atp-line-2: rgba(11, 19, 36, .14);
+    --atp-hover: rgba(11, 19, 36, .05);
+    --atp-press: rgba(11, 19, 36, .09);
+    --atp-accent: #2563EB;
+    --atp-accent-2: #1D4ED8;
+    --atp-accent-soft: #EEF3FF;
+    --atp-yellow: #FFC93C;
+    --atp-orange: #FF7A1A;
+    --atp-green: #2FD27E;
+    --atp-brand: linear-gradient(90deg, #FF7A1A, #FFC93C 50%, #2FD27E);
+    --atp-ring: 0 0 0 3px rgba(37, 99, 235, .22);
+    --atp-r-sm: 8px;
+    --atp-r: 12px;
+    --atp-r-lg: 16px;
+    --atp-shadow-1: 0 1px 2px rgba(11, 19, 36, .05), 0 0 0 1px rgba(11, 19, 36, .06);
+    --atp-shadow-2: 0 1px 2px rgba(11, 19, 36, .04), 0 6px 20px -4px rgba(11, 19, 36, .10);
+    --atp-shadow-3: 0 2px 6px rgba(11, 19, 36, .06), 0 24px 48px -16px rgba(11, 19, 36, .24);
+    --atp-ease: cubic-bezier(.2, .8, .2, 1);
+    --atp-logo-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 532 184' width='532' height='184'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='0'%3E%3Cstop offset='0' stop-color='%23FF7A1A'/%3E%3Cstop offset='.5' stop-color='%23FFC93C'/%3E%3Cstop offset='1' stop-color='%232FD27E'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath transform='translate%2828,133.8%29' d='M21.3 -43.8Q21.3 -39.8 35.8 -36.2Q44.2 -34.2 56 -33Q41.1 -46.2 26.6 -46.2Q21.3 -46.2 21.3 -43.8ZM84.6 -1.1Q88 -1.1 101.3 -27.5Q83.4 -27.2 79 -27.2Q74.6 -27.2 66.6 -27.5Q76 -16.2 81.9 -3.4Q82.9 -1.1 84.6 -1.1ZM134.7 -109.4Q129.4 -109.4 120.6 -98.2Q111.8 -86.9 97.4 -66.2Q82.9 -45.6 70.4 -32Q81.6 -31.7 90 -31.7Q98.4 -31.7 103.5 -32Q114.9 -54.4 125.7 -79.4Q136.5 -104.3 136.5 -108Q136.5 -109.4 134.7 -109.4ZM112.2 -32.3 145.4 -34.7Q146.7 -34.7 146.7 -33.4Q146.7 -32.2 144.6 -30.7Q142.4 -29.3 136.2 -28.8Q129.9 -28.3 109.8 -27.8Q93.4 4 86.7 4Q82.2 4 80.3 0Q73.3 -14.2 63.8 -25L59.2 -20.5Q35.5 1.6 4 1.6Q-4 1.6 -10 0.4Q-16 -0.8 -16 -2.9Q-16 -4.3 -14.2 -4.3Q-13.1 -4.3 -11.5 -3.7Q-6.7 -1.8 6.6 -1.8Q30.4 -1.8 51.7 -20.5Q59.4 -27.7 59.5 -27.8Q44.5 -29 34.2 -31.8Q16 -37 16 -44Q16 -46.4 18.6 -48Q21.3 -49.6 25.6 -49.6Q44.6 -49.6 61.8 -32.5Q63.2 -32.5 63.8 -32.3Q78.1 -47.7 98.6 -75.8Q105.8 -85.6 113 -94.7Q128 -113.6 137.6 -113.6Q143.8 -113.6 143.8 -108.2Q143.8 -104.5 133.5 -79.4Q123.2 -54.4 112.2 -32.3ZM181.3 -26.6Q182.4 -27.4 183.4 -27.4Q184.3 -27.4 184.3 -26.2V-25.9Q172.3 -16.3 160.6 -7.9Q149 0.5 143.5 0.5Q139.5 0.5 139.5 -3.8Q139.5 -8.2 143.4 -12.5Q147.2 -16.8 151 -20Q154.7 -23.2 154.7 -24.2Q154.7 -25.3 153.5 -26.6Q152.3 -28 151.5 -28.5Q148.8 -25.8 139.7 -18.6L139 -21Q149.1 -29 150.7 -31.7V-33.1Q150.7 -37.1 151.5 -38.6Q152.3 -40 155.4 -42.6Q158.4 -45.1 159.5 -45.1Q160.6 -45.1 161.5 -44.3Q162.4 -43.5 162.4 -42.7Q162.4 -41.9 161.8 -40.9Q161.3 -39.8 160.7 -39.1Q160.2 -38.4 159.2 -37.4Q158.2 -36.3 158 -35.9Q157.8 -35.5 157.5 -34.6Q157.3 -33.6 156.5 -33Q155.7 -32.3 155.7 -31.4Q155.7 -30.4 157 -27.1Q158.2 -23.8 158.2 -22.3Q158.2 -20.8 152.3 -15.1Q146.4 -9.4 146.4 -5.9Q146.4 -4 148.2 -4Q150.4 -4 156.5 -8L158.4 -9.3Q168.8 -16.5 177.9 -23.8ZM197.8 -19.2Q196.8 -19.2 196.8 -19.9Q196.8 -20.6 197.9 -21.6Q203.2 -25.9 203.2 -29.4Q203.2 -31.7 199.2 -32Q192 -31.8 182 -21.6Q172 -11.4 172 -6.2Q172 -4.5 174 -4.5Q176 -4.5 179.4 -7.2Q182.4 -9.1 190.7 -16.8Q192.6 -18.7 194.4 -18.7Q196.6 -18.7 196.6 -16.6Q196.6 -15.8 196.2 -15.4Q195.7 -14.9 194.4 -13.4Q193.1 -11.8 192.2 -10.6Q189.3 -6.4 189.3 -5.1Q189.3 -1.9 191.8 -1.9Q195.2 -1.9 204.5 -8.1Q213.8 -14.2 221.4 -20.5L229.1 -26.6Q230.2 -27.4 231.2 -27.4Q232.2 -27.4 232.2 -26.2V-25.9Q219.8 -15.5 206.2 -6.4Q192.5 2.7 188.2 2.7Q183 2.7 183 -2.7Q183 -4 183.5 -5.1Q184 -6.2 184 -6.7Q184 -7.2 183.7 -7.4Q183.2 -7.4 177.5 -3Q171.8 1.3 167.6 1.3Q163.4 1.3 163.4 -3.2Q163.4 -7.7 169.4 -15.3Q175.4 -22.9 185.4 -29.1Q195.5 -35.4 205.1 -35.4Q207.4 -35.4 208.9 -34.2Q210.4 -33.1 210.4 -30.8Q210.4 -28.5 205.8 -23.8Q201.1 -19.2 197.8 -19.2ZM261 -26.6Q262.2 -27.4 263.1 -27.4Q264 -27.4 264 -26.2V-25.9Q251.7 -15.5 238 -6.4Q224.3 2.7 220.6 2.7Q217 2.7 214.5 1.4Q212 0 212 -1.8Q212 -3.5 213 -4.7Q213.9 -5.9 214.7 -5.9Q215.5 -5.9 217.4 -3.4Q219.2 -1 221 -1Q224.6 -1 226.7 -8.8Q228.8 -16.6 228.8 -19.6Q228.8 -22.6 228.4 -22.6Q228 -22.6 227.7 -22.2L223 -18.6L222.4 -21Q232.5 -29 234.1 -31.7Q235 -34.2 236.8 -34.2Q237.9 -34.2 237.9 -33.4Q237.9 -32.6 236.8 -30Q235.7 -27.4 233.8 -18.1Q232 -8.8 232 -7.4Q232 -5.9 232.8 -5.9Q244 -12.8 256.5 -23ZM292.8 -26.6Q294.1 -27.4 295 -27.4Q295.8 -27.4 295.8 -26.2V-25.9Q283.5 -15.5 269.8 -6.4Q256.2 2.7 252.5 2.7Q248.8 2.7 246.3 1.4Q243.8 0 243.8 -1.8Q243.8 -3.5 244.8 -4.7Q245.8 -5.9 246.6 -5.9Q247.4 -5.9 249.2 -3.4Q251 -1 252.8 -1Q256.5 -1 258.6 -8.8Q260.6 -16.6 260.6 -19.6Q260.6 -22.6 260.2 -22.6Q259.8 -22.6 259.5 -22.2L254.9 -18.6L254.2 -21Q264.3 -29 265.9 -31.7Q266.9 -34.2 268.6 -34.2Q269.8 -34.2 269.8 -33.4Q269.8 -32.6 268.6 -30Q267.5 -27.4 265.7 -18.1Q263.8 -8.8 263.8 -7.4Q263.8 -5.9 264.6 -5.9Q275.8 -12.8 288.3 -23ZM317.9 -95 282.4 -96.8Q282.1 -96.8 281 -95.8Q279.8 -94.9 279 -94.9Q278.2 -94.9 277.9 -95Q268.5 -98.4 268.5 -103.2Q268.5 -105.6 271.2 -105.6Q272.8 -105.6 291.9 -103.1Q311 -100.6 333.1 -100.6Q355.2 -100.6 375.5 -103Q397.1 -121.8 418.4 -121.8Q427.2 -121.8 427.2 -117.6Q427.2 -106.7 377.9 -99.5Q361.6 -83.2 338.4 -46.2Q329.8 -32.6 321.3 -20Q302.6 7.8 290.7 7.8Q286.4 7.8 286.4 4.1Q286.4 0.3 289.6 -4.6Q292.6 -9.4 294.4 -9.4Q294.6 -9.4 294.6 -9.4Q296.6 -9.4 296.6 -7L296 -4Q296 -3.2 296.6 -3.2Q305.1 -3.2 325.4 -37.8Q333.6 -51.7 346.2 -69.4Q358.9 -87.2 370.7 -98.6Q343 -95 317.9 -95ZM414.6 -118.7Q399.2 -118.7 382.7 -104Q394.6 -105.8 403.1 -108.3Q411.7 -110.9 415.2 -113.1Q418.7 -115.4 418.7 -117Q418.7 -118.7 414.6 -118.7ZM397.6 -26.6Q398.7 -27.4 399.7 -27.4Q400.6 -27.4 400.6 -26.2V-25.9Q384 -12.2 373 -5.3Q361.9 1.6 353 1.6Q345.8 1.6 345.8 -5.4Q345.8 -15.8 356.3 -26.8Q366.9 -37.8 374.1 -37.8Q378.1 -37.8 378.1 -33.3Q377.3 -24.5 352.8 -9.6V-8Q352.8 -2.7 358.3 -2.7Q363.8 -2.7 370.2 -6.4Q382.7 -13.8 393.6 -23.2ZM369.9 -32.8Q366.4 -32.8 360.9 -26.9Q355.4 -21 353.4 -13.4Q361.1 -18.1 366.4 -23.3Q371.7 -28.5 371.7 -30.6Q371.7 -32.8 369.9 -32.8ZM436.5 -26.6Q437.8 -27.4 438.6 -27.4Q439.5 -27.4 439.5 -26.2V-25.9Q426.9 -14.7 413.4 -6.2Q400 2.2 391 2.2Q384 2.2 384 -6.2Q384 -14.6 394.2 -24.5Q404.3 -34.4 416.2 -34.4Q419.7 -34.1 420.6 -33.3Q421.4 -32.5 421.4 -31Q421.4 -29.6 418.5 -25.8Q415.5 -22.1 413.1 -22.1Q410.4 -22.6 410.4 -24Q410.4 -24.6 411.8 -26.1Q414.6 -28.5 414.6 -29.6Q414.6 -30.7 412.8 -30.7Q407.2 -30.6 398.7 -21.5Q390.2 -12.5 390.2 -6.6Q390.2 -2.1 396.1 -2.1Q401.9 -2.1 408.6 -6.2Q420.5 -13.4 432.5 -23.4ZM488.6 -26.7Q489.8 -27.5 490.7 -27.5Q491.7 -27.5 491.7 -26.6V-26.1Q479 -15.5 466.9 -7.2Q454.7 2.1 450 2.1Q445.3 2.1 445.3 -1.8Q445.3 -5.9 451.4 -15.8Q457.4 -25.8 457.4 -26.5Q457.4 -27.2 456.8 -27.2Q454.7 -27.2 444.1 -18Q433.4 -8.8 425.4 -1Q422.4 1.8 421.2 1.8Q420 1.8 420 0Q420 -1.8 422.1 -4.5L477.9 -89.6Q479.7 -92.3 482.6 -92.3Q485.6 -92.3 485.6 -90.4Q485.6 -89.3 484.7 -88Q483.8 -86.7 473.9 -72.7Q464 -58.7 462.5 -56.2Q461 -53.6 448.6 -35Q436.2 -16.5 435.4 -15.4Q434.7 -14.4 434.7 -13.8Q434.7 -13.1 435.3 -13.1Q435.8 -13.1 436 -13.3Q441.1 -18.4 450 -25.2Q458.9 -32 462.2 -32Q463.5 -32 464.5 -31.1Q465.4 -30.2 465.4 -28.2Q465.4 -26.2 459.2 -17.4Q453 -8.5 453 -5.8Q453 -3.2 454.6 -3.2Q456.3 -3.2 463 -7.7Q475 -15.7 485.1 -23.8Z' fill='%230B1324'/%3E%3Cpath d='M 22.2 147.6 C 154.2 167.6, 347.1 165.6, 468.9 149.6 C 494.3 145.6, 512.1 140.6, 519.7 135.6' fill='none' stroke='url%28%23g%29' stroke-width='5.5' stroke-linecap='round'/%3E%3C/svg%3E");
+
+    /* AUI */
+    --aui-body-background: var(--atp-bg);
+    --aui-body-text: var(--atp-text);
+    --aui-lesser-body-text: var(--atp-text-2);
+    --aui-page-background: var(--atp-surface);
+    --aui-page-border: var(--atp-line);
+    --aui-border: var(--atp-line-2);
+    --aui-focus: var(--atp-accent);
+    --aui-link-color: var(--atp-accent);
+    --aui-link-hover-color: var(--atp-accent-2);
+    --aui-link-active-color: #1E40AF;
+    --aui-link-visited-color: var(--atp-accent);
+    --aui-itemheading-text: var(--atp-text-3);
+    --aui-item-text: #334155;
+    --aui-item-focus-bg: var(--atp-hover);
+    --aui-item-focus-text: var(--atp-text);
+    --aui-item-active-bg: var(--atp-accent-soft);
+    --aui-item-active-text: var(--atp-accent-2);
+    --aui-item-selected-bg: var(--atp-hover);
+    --aui-item-selected-text: var(--atp-text);
+    --aui-shadow1: rgba(11, 19, 36, .10);
+    --aui-shadow2: rgba(11, 19, 36, .18);
+    --aui-button-default-bg-color: var(--atp-hover);
+    --aui-button-default-text-color: var(--atp-text);
+    --aui-button-default-hover-bg-color: var(--atp-press);
+    --aui-button-default-active-bg-color: var(--atp-accent-soft);
+    --aui-button-default-active-text-color: var(--atp-accent-2);
+    --aui-button-default-selected-bg-color: var(--atp-ink);
+    --aui-button-primary-bg-color: var(--atp-ink);
+    --aui-button-primary-hover-bg-color: var(--atp-ink-2);
+    --aui-button-primary-active-bg-color: #131D35;
+    --aui-appheader-bg-color: rgba(255, 255, 255, .88);
+    --aui-appheader-text-color: var(--atp-text);
+    --aui-appheader-item-focus-bg-color: var(--atp-hover);
+    --aui-appheader-item-focus-text-color: var(--atp-text);
+    --aui-appheader-item-active-bg-color: var(--atp-press);
+    --aui-appheader-item-active-text-color: var(--atp-text);
+    --aui-appheader-quicksearch-bg-color: var(--atp-hover);
+    --aui-appheader-quicksearch-border-color: transparent;
+    --aui-appheader-quicksearch-text-color: var(--atp-text);
+    --aui-appheader-quicksearch-placeholder-text-color: var(--atp-text-3);
+    --aui-appheader-quicksearch-hover-bg-color: var(--atp-press);
+    --aui-appheader-quicksearch-focus-bg-color: #FFFFFF;
+    --aui-appheader-quicksearch-focus-text-color: var(--atp-text);
+    --aui-sidebar-bg-color: #FBFBFC;
+    --aui-sidebar-icon-color: var(--atp-text-2);
+    --aui-tabs-tab-border-color: var(--atp-line);
+    --aui-tabs-tab-text-color: var(--atp-text-2);
+    --aui-tabs-tab-hover-text-color: var(--atp-text);
+    --aui-tabs-tab-active-border-color: var(--atp-ink);
+    --aui-tabs-tab-active-text-color: var(--atp-ink);
+    --aui-table-border-color: var(--atp-line);
+    --aui-table-heading-text-color: var(--atp-text-2);
+    --aui-table-list-row-hover-color: rgba(11, 19, 36, .03);
+    --aui-table-sortable-active-bg-color: var(--atp-accent-soft);
+    --aui-table-sortable-active-border-color: var(--atp-accent);
+    --aui-table-sortable-active-text-color: var(--atp-accent-2);
+    --aui-dropdown-border-color: var(--atp-line);
+    --aui-dialog-border-color: var(--atp-line);
+    --aui-inline-dialog-border-color: var(--atp-line);
+    --aui-form-label-text-color: var(--atp-text-2);
+    --aui-form-description-text-color: var(--atp-text-3);
+    --aui-form-placeholder-text-color: var(--atp-text-3);
+    --aui-form-field-border-color: var(--atp-line-2);
+    --aui-form-field-hover-border-color: rgba(11, 19, 36, .26);
+    --aui-form-field-default-bg-color: #FFFFFF;
+    --aui-form-field-hover-bg-color: #FFFFFF;
+    --aui-form-field-focus-bg-color: #FFFFFF;
+    --aui-form-select-bg-color: var(--atp-hover);
+    --aui-form-select-border-color: transparent;
+    --aui-form-select-hover-bg-color: var(--atp-press);
+    --aui-form-glyph-fill-color: var(--atp-accent);
+    --aui-form-checkbox-active-bg-color: var(--atp-accent-soft);
+    --aui-form-checkbox-active-border-color: var(--atp-accent-soft);
+    --aui-form-checkbox-active-icon-color: var(--atp-accent);
+    --aui-badge-primary-bg-color: var(--atp-ink);
+    --aui-lozenge-current-bg-color: var(--atp-accent);
+    --aui-lozenge-current-subtle-bg-color: var(--atp-accent-soft);
+    --aui-lozenge-current-subtle-text-color: var(--atp-accent-2);
+
+    /* Atlassian design tokens (React screens of Jira Service Management, Assets, the issue view) */
+    --ds-text: var(--atp-text);
+    --ds-text-subtle: #334155;
+    --ds-text-subtlest: var(--atp-text-2);
+    --ds-text-selected: var(--atp-accent-2);
+    --ds-link: var(--atp-accent);
+    --ds-link-pressed: #1E40AF;
+    --ds-border: var(--atp-line);
+    --ds-border-input: var(--atp-line-2);
+    --ds-border-focused: var(--atp-accent);
+    --ds-border-selected: var(--atp-accent);
+    --ds-background-input: #FFFFFF;
+    --ds-background-input-hovered: #FFFFFF;
+    --ds-background-input-pressed: #FFFFFF;
+    --ds-background-neutral: var(--atp-hover);
+    --ds-background-neutral-hovered: var(--atp-press);
+    --ds-background-neutral-pressed: rgba(11, 19, 36, .13);
+    --ds-background-neutral-subtle-hovered: var(--atp-hover);
+    --ds-background-neutral-subtle-pressed: var(--atp-press);
+    --ds-background-selected: var(--atp-accent-soft);
+    --ds-background-selected-hovered: #E2EAFF;
+    --ds-background-selected-pressed: #D4E0FF;
+    --ds-background-brand-bold: var(--atp-ink);
+    --ds-background-brand-bold-hovered: var(--atp-ink-2);
+    --ds-background-brand-bold-pressed: #131D35;
+    --ds-surface: var(--atp-surface);
+    --ds-surface-hovered: var(--atp-sunken);
+    --ds-surface-pressed: #F1F2F5;
+    --ds-surface-raised: var(--atp-surface);
+    --ds-surface-raised-hovered: var(--atp-sunken);
+    --ds-surface-overlay: var(--atp-surface);
+    --ds-surface-sunken: var(--atp-bg);
+    --ds-shadow-raised: 0 1px 2px rgba(11, 19, 36, .06), 0 0 1px rgba(11, 19, 36, .14);
+    --ds-shadow-overlay: 0 14px 36px -10px rgba(11, 19, 36, .22), 0 0 1px rgba(11, 19, 36, .16);
+}
+
+/* ───────────────────────────── 2 · page ───────────────────────────── */
+html.atp-theme:not([data-color-mode="dark"]),
+html.atp-theme:not([data-color-mode="dark"]) body {
+    background: var(--atp-bg) !important;
+    color: var(--atp-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+/* gadgets render inside frames that sit on white cards */
+html.atp-theme.atp-frame:not([data-color-mode="dark"]),
+html.atp-theme.atp-frame:not([data-color-mode="dark"]) body { background: transparent !important; }
+/* quiet, thin scrollbars instead of the classic arrowed ones */
+html.atp-theme:not([data-color-mode="dark"]),
+html.atp-theme:not([data-color-mode="dark"]) * { scrollbar-width: thin; scrollbar-color: rgba(11, 19, 36, .22) transparent; }
+html.atp-theme:not([data-color-mode="dark"]) ::selection { background: rgba(255, 201, 60, .45); color: var(--atp-ink); }
+html.atp-theme:not([data-color-mode="dark"]) #page { background: transparent; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-page-panel {
+    border: 0 !important;
+    border-radius: var(--atp-r-lg);
+    box-shadow: var(--atp-shadow-1);
+    background: var(--atp-surface);
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-page-header-main h1,
+html.atp-theme:not([data-color-mode="dark"]) #content > header h1,
+html.atp-theme:not([data-color-mode="dark"]) .aui-page-header h1 {
+    color: var(--atp-text);
+    font-weight: 700;
+    letter-spacing: -.015em;
+}
+html.atp-theme:not([data-color-mode="dark"]) a:focus-visible,
+html.atp-theme:not([data-color-mode="dark"]) button:focus-visible { outline: none; box-shadow: var(--atp-ring); border-radius: 6px; }
+
+/* ───────────────────────────── 3 · top bar ───────────────────────────── */
+html.atp-theme:not([data-color-mode="dark"]) #header { position: relative; z-index: 3; }
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header,
+html.atp-theme:not([data-color-mode="dark"]) #header > nav {
+    background: rgba(255, 255, 255, .86) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    backdrop-filter: saturate(180%) blur(18px);
+    border-bottom: 1px solid var(--atp-line) !important;
+    box-shadow: none !important;
+    color: var(--atp-text) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -1px 0;
+    height: 2px;
+    background: var(--atp-brand);
+    opacity: .85;
+    pointer-events: none;
+}
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header .aui-nav > li > a:not(.aui-button),
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header .aui-header-secondary .aui-nav > li > a {
+    color: var(--atp-text) !important;
+    border-radius: 999px !important;
+    font-weight: 500;
+    transition: background .18s var(--atp-ease);
+}
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header .aui-nav > li > a:not(.aui-button):hover,
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header .aui-nav > li > a:not(.aui-button):focus,
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header .aui-nav > li > a.active,
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header .aui-nav > li > a[aria-expanded="true"] {
+    background: var(--atp-hover) !important;
+    color: var(--atp-text) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header .aui-nav > li > a .aui-icon,
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header .aui-header-secondary .aui-icon { color: var(--atp-text-2) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header .aui-button-primary,
+html.atp-theme:not([data-color-mode="dark"]) #header #create_link {
+    background: var(--atp-ink) !important;
+    color: #FFFFFF !important;
+    border-radius: 999px !important;
+    padding-inline: 16px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 6px 16px -8px rgba(11, 19, 36, .55) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) #header #create_link:hover { background: var(--atp-ink-2) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #header #quicksearch input,
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-quicksearch input {
+    border-radius: 999px !important;
+    background: var(--atp-hover) !important;
+    border: 1px solid transparent !important;
+    color: var(--atp-text) !important;
+    transition: background .2s var(--atp-ease), box-shadow .2s var(--atp-ease), border-color .2s var(--atp-ease);
+}
+html.atp-theme:not([data-color-mode="dark"]) #header #quicksearch input:focus,
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-quicksearch input:focus {
+    background: #FFFFFF !important;
+    border-color: var(--atp-line-2) !important;
+    box-shadow: var(--atp-ring) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) #header #logo img,
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header-logo img { filter: none; }
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header-logo-device,
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-header-logo-text { color: var(--atp-ink) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #header .aui-avatar-inner img { box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3px var(--atp-line-2); border-radius: 50%; }
+
+/* ───────────────────────────── 4 · side navigation ───────────────────────────── */
+html.atp-theme:not([data-color-mode="dark"]) .aui-sidebar .aui-sidebar-wrapper {
+    background: #FBFBFC !important;
+    border-inline-end: 1px solid var(--atp-line) !important;
+    border-left-color: var(--atp-line) !important;
+    border-right-color: var(--atp-line) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-sidebar .aui-nav-item,
+html.atp-theme:not([data-color-mode="dark"]) .aui-page-panel-nav .aui-nav > li > a,
+html.atp-theme:not([data-color-mode="dark"]) .aui-navgroup-vertical .aui-nav > li > a {
+    border-radius: var(--atp-r-sm) !important;
+    color: #334155 !important;
+    transition: background .15s var(--atp-ease), color .15s var(--atp-ease);
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-sidebar .aui-nav-item:hover,
+html.atp-theme:not([data-color-mode="dark"]) .aui-page-panel-nav .aui-nav > li > a:hover,
+html.atp-theme:not([data-color-mode="dark"]) .aui-navgroup-vertical .aui-nav > li > a:hover {
+    background: var(--atp-hover) !important;
+    color: var(--atp-text) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-sidebar .aui-nav-selected > .aui-nav-item,
+html.atp-theme:not([data-color-mode="dark"]) .aui-page-panel-nav .aui-nav > li.aui-nav-selected > a,
+html.atp-theme:not([data-color-mode="dark"]) .aui-navgroup-vertical .aui-nav > li.aui-nav-selected > a {
+    background: var(--atp-accent-soft) !important;
+    color: var(--atp-accent-2) !important;
+    font-weight: 600;
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-sidebar .aui-nav-heading,
+html.atp-theme:not([data-color-mode="dark"]) .aui-page-panel-nav .aui-nav-heading { color: var(--atp-text-3) !important; letter-spacing: .02em; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-page-panel-nav {
+    background: transparent !important;
+    border-inline-end: 1px solid var(--atp-line) !important;
+}
+
+/* ───────────────────────────── 5 · buttons, fields, menus, dialogs ───────────────────────────── */
+html.atp-theme:not([data-color-mode="dark"]) .aui-button:not(.aui-button-link):not(.aui-button-subtle):not(.aui-button-text) {
+    border-radius: var(--atp-r-sm) !important;
+    font-weight: 500;
+    transition: background .15s var(--atp-ease), box-shadow .15s var(--atp-ease), transform .1s var(--atp-ease);
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-button.aui-button-primary:not([disabled]):not([aria-disabled="true"]) {
+    background: var(--atp-ink) !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+    font-weight: 600;
+    box-shadow: 0 6px 16px -10px rgba(11, 19, 36, .6) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-button.aui-button-primary:not([disabled]):hover { background: var(--atp-ink-2) !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-button:active:not([disabled]) { transform: scale(.98); }
+html.atp-theme:not([data-color-mode="dark"]) .aui-button:focus-visible { box-shadow: var(--atp-ring) !important; outline: none !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-button.aui-button-subtle:hover,
+html.atp-theme:not([data-color-mode="dark"]) .aui-button.aui-button-link:hover { background: var(--atp-hover) !important; border-radius: var(--atp-r-sm) !important; }
+
+html.atp-theme:not([data-color-mode="dark"]) form.aui .text,
+html.atp-theme:not([data-color-mode="dark"]) form.aui .password,
+html.atp-theme:not([data-color-mode="dark"]) form.aui .textarea,
+html.atp-theme:not([data-color-mode="dark"]) form.aui .select,
+html.atp-theme:not([data-color-mode="dark"]) form.aui .multi-select,
+html.atp-theme:not([data-color-mode="dark"]) .aui .text,
+html.atp-theme:not([data-color-mode="dark"]) .aui .textarea,
+html.atp-theme:not([data-color-mode="dark"]) input.text,
+html.atp-theme:not([data-color-mode="dark"]) textarea.textarea {
+    border-radius: var(--atp-r-sm) !important;
+    border-color: var(--atp-line-2) !important;
+    background-color: #FFFFFF !important;
+    transition: border-color .15s var(--atp-ease), box-shadow .15s var(--atp-ease);
+}
+html.atp-theme:not([data-color-mode="dark"]) form.aui .text:hover,
+html.atp-theme:not([data-color-mode="dark"]) form.aui .textarea:hover,
+html.atp-theme:not([data-color-mode="dark"]) input.text:hover { border-color: rgba(11, 19, 36, .26) !important; }
+html.atp-theme:not([data-color-mode="dark"]) form.aui .text:focus,
+html.atp-theme:not([data-color-mode="dark"]) form.aui .password:focus,
+html.atp-theme:not([data-color-mode="dark"]) form.aui .textarea:focus,
+html.atp-theme:not([data-color-mode="dark"]) form.aui .select:focus,
+html.atp-theme:not([data-color-mode="dark"]) input.text:focus,
+html.atp-theme:not([data-color-mode="dark"]) textarea.textarea:focus {
+    border-color: var(--atp-accent) !important;
+    box-shadow: var(--atp-ring) !important;
+    outline: none !important;
+}
+
+html.atp-theme:not([data-color-mode="dark"]) .aui-dropdown2.aui-layer,
+html.atp-theme:not([data-color-mode="dark"]) .aui-dropdown2,
+html.atp-theme:not([data-color-mode="dark"]) .ajs-layer.box-shadow,
+html.atp-theme:not([data-color-mode="dark"]) .aui-inline-dialog .aui-inline-dialog-contents,
+html.atp-theme:not([data-color-mode="dark"]) aui-inline-dialog .aui-inline-dialog-contents {
+    border: 1px solid var(--atp-line) !important;
+    border-radius: var(--atp-r) !important;
+    box-shadow: var(--atp-shadow-3) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-dropdown2.aui-layer { padding: 4px !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-dropdown2 .aui-dropdown2-section a,
+html.atp-theme:not([data-color-mode="dark"]) .aui-dropdown2 aui-item-link a,
+html.atp-theme:not([data-color-mode="dark"]) .aui-dropdown2 .aui-dropdown2-section button { border-radius: 6px; }
+
+html.atp-theme:not([data-color-mode="dark"]) .aui-dialog2,
+html.atp-theme:not([data-color-mode="dark"]) .jira-dialog,
+html.atp-theme:not([data-color-mode="dark"]) .aui-dialog {
+    border: 0 !important;
+    border-radius: var(--atp-r-lg) !important;
+    box-shadow: var(--atp-shadow-3), 0 0 0 1px var(--atp-line) !important;
+    overflow: hidden;
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-dialog2-header,
+html.atp-theme:not([data-color-mode="dark"]) .jira-dialog-heading { border-bottom: 1px solid var(--atp-line) !important; background: #FFFFFF !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-dialog2-footer,
+html.atp-theme:not([data-color-mode="dark"]) .jira-dialog .buttons-container { border-top: 1px solid var(--atp-line) !important; background: var(--atp-sunken) !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-blanket,
+html.atp-theme:not([data-color-mode="dark"]) .aui-blanket.aui-blanket { background: rgba(11, 19, 36, .32) !important; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+
+html.atp-theme:not([data-color-mode="dark"]) .aui-lozenge { border-radius: 6px !important; letter-spacing: .02em; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-badge { border-radius: 999px !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-message {
+    border-radius: var(--atp-r) !important;
+    border: 1px solid var(--atp-line) !important;
+    box-shadow: none !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-tabs > .tabs-menu .menu-item.active-tab a::after,
+html.atp-theme:not([data-color-mode="dark"]) .aui-tabs > .tabs-menu .menu-item.active-tab a { border-bottom-color: var(--atp-ink) !important; }
+
+/* tables */
+html.atp-theme:not([data-color-mode="dark"]) table.aui > thead > tr > th,
+html.atp-theme:not([data-color-mode="dark"]) #issuetable > thead th {
+    color: var(--atp-text-2) !important;
+    font-weight: 600;
+    border-bottom: 1px solid var(--atp-line-2) !important;
+    background: transparent !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) table.aui > tbody > tr,
+html.atp-theme:not([data-color-mode="dark"]) #issuetable > tbody > tr { border-bottom: 1px solid var(--atp-line) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #issuetable > tbody > tr:hover,
+html.atp-theme:not([data-color-mode="dark"]) table.aui > tbody > tr:hover { background: rgba(11, 19, 36, .025) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #issuetable > tbody > tr.focused,
+html.atp-theme:not([data-color-mode="dark"]) #issuetable > tbody > tr.issueactioneddissapearing { background: var(--atp-accent-soft) !important; }
+
+/* ───────────────────────────── 6 · dashboard ───────────────────────────── */
+html.atp-theme:not([data-color-mode="dark"]) .dashboard-item-frame,
+html.atp-theme:not([data-color-mode="dark"]) .gadget-container {
+    border: 0 !important;
+    border-radius: var(--atp-r-lg) !important;
+    background: var(--atp-surface) !important;
+    box-shadow: var(--atp-shadow-1) !important;
+    overflow: hidden;
+}
+html.atp-theme:not([data-color-mode="dark"]) .dashboard-item-header,
+html.atp-theme:not([data-color-mode="dark"]) .gadget-container .dashboard-item-header {
+    background: #FFFFFF !important;
+    border-bottom: 1px solid var(--atp-line) !important;
+    color: var(--atp-text) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) .dashboard-item-header .dashboard-item-title,
+html.atp-theme:not([data-color-mode="dark"]) .dashboard-item-header h3 { color: var(--atp-text) !important; font-weight: 600 !important; }
+html.atp-theme:not([data-color-mode="dark"]) .dashboard-item-header .aui-icon,
+html.atp-theme:not([data-color-mode="dark"]) .dashboard-item-header a { color: var(--atp-text-2) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #dashboard .dashboard-tabs,
+html.atp-theme:not([data-color-mode="dark"]) #dashboard-content { background: transparent !important; }
+/* Jira paints the dashboard frame with a dark-theme fallback (#1d2125) when its surface token is empty */
+html.atp-theme:not([data-color-mode="dark"]) #dashboard,
+html.atp-theme:not([data-color-mode="dark"]) .dashboard,
+html.atp-theme:not([data-color-mode="dark"]) .dashboard-content { background-color: var(--atp-bg) !important; }
+
+/* ───────────────────────────── 7 · issue view and queues ───────────────────────────── */
+html.atp-theme:not([data-color-mode="dark"]) #issue-content .aui-page-header,
+html.atp-theme:not([data-color-mode="dark"]) .issue-header-content { background: transparent !important; }
+html.atp-theme:not([data-color-mode="dark"]) #summary-val { font-weight: 700; letter-spacing: -.015em; color: var(--atp-text); }
+html.atp-theme:not([data-color-mode="dark"]) .module > .mod-header h4,
+html.atp-theme:not([data-color-mode="dark"]) .module > .mod-header .toggle-title { color: var(--atp-text) !important; font-weight: 600; }
+html.atp-theme:not([data-color-mode="dark"]) .module > .mod-header { border-bottom: 1px solid var(--atp-line) !important; }
+html.atp-theme:not([data-color-mode="dark"]) .activity-comment,
+html.atp-theme:not([data-color-mode="dark"]) .issue-data-block {
+    border-radius: var(--atp-r) !important;
+    border-color: var(--atp-line) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) .activity-comment .action-body,
+html.atp-theme:not([data-color-mode="dark"]) .activity-comment .action-head { background: transparent !important; }
+html.atp-theme:not([data-color-mode="dark"]) .toolbar-split .aui-button,
+html.atp-theme:not([data-color-mode="dark"]) .ops-menus .aui-button { border-radius: var(--atp-r-sm) !important; }
+/* the status button speaks in soft tints of the palette instead of solid Atlassian blue */
+html.atp-theme:not([data-color-mode="dark"]) .aui-button[class*="status-category_"] {
+    border-radius: 999px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) .aui-button[class*="status-category_new"] { background: rgba(11, 19, 36, .07) !important; color: var(--atp-text) !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-button[class*="status-category_new"]:hover { background: rgba(11, 19, 36, .11) !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-button[class*="status-category_indeterminate"] { background: var(--atp-accent-soft) !important; color: var(--atp-accent-2) !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-button[class*="status-category_indeterminate"]:hover { background: #E2EAFF !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-button[class*="status-category_done"] { background: #E7F7EE !important; color: #0B7A43 !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-button[class*="status-category_done"]:hover { background: #D6F2E3 !important; }
+html.atp-theme:not([data-color-mode="dark"]) .aui-button[class*="status-category_"] .aui-icon,
+html.atp-theme:not([data-color-mode="dark"]) .aui-button[class*="status-category_"]::after { color: currentColor !important; }
+
+/* ───────────────────────────── 8 · footer ───────────────────────────── */
+html.atp-theme:not([data-color-mode="dark"]) #footer,
+html.atp-theme:not([data-color-mode="dark"]) #footer .footer-body { background: transparent !important; border-top: 0 !important; color: var(--atp-text-3) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #footer a { color: var(--atp-text-2) !important; text-decoration: none !important; }
+html.atp-theme:not([data-color-mode="dark"]) #footer a:hover { color: var(--atp-text) !important; text-decoration: underline !important; }
+
+/* ───────────────────────────── 9 · login page (Jira 10 renders it with React) ───────────────────────────── */
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login {
+    background:
+        radial-gradient(560px 360px at 12% -8%, rgba(255, 201, 60, .24), transparent 70%),
+        radial-gradient(620px 380px at 92% 4%, rgba(47, 210, 126, .18), transparent 70%),
+        radial-gradient(900px 480px at 50% 120%, rgba(255, 122, 26, .16), transparent 70%),
+        var(--atp-bg) !important;
+    min-height: 100vh;
+}
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #content,
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #page { background: transparent !important; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login [data-testid="two-step-verification-login"] > div {
+    box-sizing: content-box;
+    width: 340px !important;
+    max-width: calc(100vw - 64px);
+    padding: 40px 40px 28px !important;
+    border-radius: 24px !important;
+    background: rgba(255, 255, 255, .9) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    backdrop-filter: saturate(180%) blur(16px);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset, 0 30px 60px -24px rgba(11, 19, 36, .28), 0 0 0 1px var(--atp-line) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-header { text-align: center; justify-items: center; margin-bottom: 8px; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-header::before {
+    content: "";
+    display: block;
+    width: 190px;
+    height: 66px;
+    margin: 0 auto 14px;
+    background: var(--atp-logo-ink) center / contain no-repeat;
+}
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-header h1 {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    letter-spacing: -.02em;
+    color: var(--atp-text) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-header span { color: var(--atp-text-2) !important; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-form label { color: var(--atp-text) !important; font-weight: 600 !important; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-form [data-ds--text-field--container] {
+    min-height: 44px;
+    border-radius: 12px !important;
+    border: 1px solid var(--atp-line-2) !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transition: border-color .15s var(--atp-ease), box-shadow .15s var(--atp-ease);
+}
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-form [data-ds--text-field--container]:hover { border-color: rgba(11, 19, 36, .26) !important; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-form [data-ds--text-field--container]:focus-within {
+    border-color: var(--atp-accent) !important;
+    box-shadow: var(--atp-ring) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-form input[data-ds--text-field--input] { height: 42px; font-size: 15px !important; padding-inline: 12px !important; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-button {
+    width: 100%;
+    height: 44px !important;
+    border-radius: 12px !important;
+    background: var(--atp-ink) !important;
+    color: #FFFFFF !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 10px 22px -12px rgba(11, 19, 36, .7) !important;
+    transition: background .15s var(--atp-ease), transform .1s var(--atp-ease);
+}
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-button:hover { background: var(--atp-ink-2) !important; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-button:active { transform: scale(.985); }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-button:focus-visible { box-shadow: var(--atp-ring) !important; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-form ~ nav { text-align: center; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-form ~ nav a { color: var(--atp-text-2) !important; font-weight: 500; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #login-form ~ nav a:hover { color: var(--atp-text) !important; }
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login #footer { opacity: .8; }
+
+/* the classic (non-React) login and secure-administrator forms */
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login .aui-page-panel {
+    max-width: 420px;
+    margin: 56px auto 24px !important;
+    padding: 32px 32px 24px !important;
+    border-radius: 24px !important;
+    background: rgba(255, 255, 255, .92) !important;
+    box-shadow: 0 30px 60px -24px rgba(11, 19, 36, .28), 0 0 0 1px var(--atp-line) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) body.atp-login .aui-page-panel .aui-button-primary { border-radius: 12px !important; min-height: 40px; }
+
+/* ───────────────────────────── 10 · customer portal ───────────────────────────── */
+html.atp-theme:not([data-color-mode="dark"]) .cv-bg-image {
+    background-color: #FFFFFF !important;
+    background-image:
+        radial-gradient(520px 320px at 8% -12%, rgba(255, 201, 60, .30), transparent 70%),
+        radial-gradient(620px 360px at 94% -6%, rgba(47, 210, 126, .20), transparent 70%),
+        radial-gradient(880px 420px at 50% 130%, rgba(255, 122, 26, .16), transparent 70%),
+        linear-gradient(180deg, #FFFFFF 0%, #F5F5F7 100%) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) .cv-bg-image::after { background: linear-gradient(90deg, transparent, rgba(11, 19, 36, .08), transparent) !important; }
+html.atp-theme:not([data-color-mode="dark"]) .cv-help-center .cv-smart-portal-title-wrapper::before { background-image: var(--atp-logo-ink) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #page .cv-smart-portal-title,
+html.atp-theme:not([data-color-mode="dark"]) #page #cv-help-center-page-title { color: var(--atp-ink) !important; }
+html.atp-theme:not([data-color-mode="dark"]) .cv-help-center .sd-customer-portal-smart-search-label { color: var(--atp-text-2) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #page #sd-customer-portal-smart-search-input {
+    background: #FFFFFF !important;
+    border: 1px solid var(--atp-line-2) !important;
+    color: var(--atp-ink) !important;
+    box-shadow: 0 1px 2px rgba(11, 19, 36, .04), 0 16px 32px -18px rgba(11, 19, 36, .28) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) #page #sd-customer-portal-smart-search-input:focus {
+    border-color: var(--atp-accent) !important;
+    box-shadow: var(--atp-ring), 0 16px 32px -18px rgba(11, 19, 36, .30) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) .cv-help-center .sd-smart-search-input-result-count { color: var(--atp-text-2) !important; }
+html.atp-theme:not([data-color-mode="dark"]) body.aui-layout #header,
+html.atp-theme:not([data-color-mode="dark"]) .cv-help-center-page #header,
+html.atp-theme:not([data-color-mode="dark"]) #page > #header {
+    background: rgba(255, 255, 255, .78) !important;
+    border-bottom: 1px solid var(--atp-line) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) #page .cp-header a.cp-help-center { background-image: var(--atp-logo-ink) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #page .cp-header .cv-header-nav-button {
+    background: var(--atp-hover) !important;
+    border: 1px solid transparent !important;
+    color: var(--atp-ink) !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) #page .cp-header .cv-header-nav-button:hover,
+html.atp-theme:not([data-color-mode="dark"]) #page .cp-header .cv-header-nav-button.active,
+html.atp-theme:not([data-color-mode="dark"]) #page .cp-header .cv-header-nav-button[aria-expanded="true"] {
+    background: var(--atp-press) !important;
+    border-color: transparent !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) #page .cp-header .cv-header-nav-button .customize-icon { color: var(--atp-orange) !important; }
+html.atp-theme:not([data-color-mode="dark"]) #page .cp-avatar-image { box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3px var(--atp-line-2) !important; }
+html.atp-theme:not([data-color-mode="dark"]) body:not(:has(.cv-help-center)) #content-wrapper {
+    box-shadow: 0 1px 2px rgba(11, 19, 36, .04), 0 24px 48px -28px rgba(11, 19, 36, .22), 0 0 0 1px var(--atp-line) !important;
+}
+/* request page: one card only (the page frame), with a real gutter between the conversation and the sidebar */
+html.atp-theme:not([data-color-mode="dark"]) #content-wrapper .aui-page-panel {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) #content-wrapper .cv-page-body-inner > .aui-page-panel-sidebar { padding-inline-start: 40px !important; }
+/* request-group pills sit inside their column, clear of the divider */
+html.atp-theme:not([data-color-mode="dark"]) #page .cv-request-groups { margin: 0 !important; padding: 8px 0 0 !important; }
+html.atp-theme:not([data-color-mode="dark"]) #page .cv-request-group-name {
+    width: auto !important;
+    margin: 0 !important;
+    margin-inline-end: 14px !important;
+    left: auto !important;
+    right: auto !important;
+}
+html.atp-theme:not([data-color-mode="dark"]) #page .cv-request-group.cv-active .cv-request-group-name {
+    background: var(--atp-ink) !important;
+    box-shadow: 0 6px 16px -10px rgba(11, 19, 36, .55);
+}
+html.atp-theme:not([data-color-mode="dark"]) #page .aui-button-primary:focus-visible,
+html.atp-theme:not([data-color-mode="dark"]) #page .cp-request-form input.text:focus,
+html.atp-theme:not([data-color-mode="dark"]) #page .cp-request-form textarea:focus {
+    border-color: var(--atp-accent) !important;
+    box-shadow: var(--atp-ring) !important;
+}
+
+/* motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    html.atp-theme * { transition: none !important; }
+}
