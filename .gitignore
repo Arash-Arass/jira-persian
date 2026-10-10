@@ -1,0 +1,8 @@
+# build output
+/build/
+/dist/
+/java/gen/
+# Atlassian API jars are copied from a local Jira install (tools/collect-jira-api.sh) and are not redistributed
+/lib/
+*.class
+.DS_Store
