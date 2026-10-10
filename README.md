@@ -65,8 +65,8 @@ sudo systemctl start jira
 </div>
 
 ```bash
-sudo tools/collect-jira-api.sh /opt/atlassian/jira   # copies Jira's API jars into ./lib
-tools/build.sh 1.2.0                                 # → dist/arasstech-persian-jsm-1.2.0.jar
+sudo bash tools/collect-jira-api.sh /opt/atlassian/jira   # copies Jira's API jars into ./lib
+bash tools/build.sh 1.2.0                                 # → dist/arasstech-persian-jsm-1.2.0.jar
 ```
 
 <div dir="rtl">
@@ -94,5 +94,5 @@ with a Jalali date picker. Data is still stored in Gregorian. English users are 
 - **Install:** stop Jira, copy the jar into `<jira-home>/plugins/installed-plugins/`, start Jira
   (on a cluster, use the shared home).
   Each user then picks *Profile → Preferences → Language → Persian (Iran)*.
-- **Build:** `tools/collect-jira-api.sh` then `tools/build.sh <version>` (JDK 17+).
+- **Build:** `bash tools/collect-jira-api.sh` then `bash tools/build.sh <version>` (JDK 17+).
 - Jira and Atlassian are trademarks of Atlassian. This project is not affiliated with Atlassian.
