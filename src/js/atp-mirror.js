@@ -97,8 +97,11 @@
         var out = [], i, p;
         function val(n) { return st.getPropertyValue(n); }
         function imp(n) { return st.getPropertyPriority(n) ? ' !important' : ''; }
+        /* left:50% / right:50% is centering (with a negative margin or translateX(-50%) that is often set inline), not a side */
+        var centered = (val('left').trim() === '50%' && !val('right')) || (val('right').trim() === '50%' && !val('left'));
         for (i = 0; i < PAIRS.length; i++) {
             var a = PAIRS[i][0], b = PAIRS[i][1], reset = PAIRS[i][2];
+            if (centered && (a === 'left' || a === 'margin-left')) { continue; }
             var va = val(a), vb = val(b);
             if (!va && !vb) { continue; }
             if (va && vb) {
@@ -139,7 +142,7 @@
             var v = val(p);
             if (v) { out.push(p + ':' + (flipWord(v) || v) + imp(p)); }
         }
-        var tf = val('transform');
+        var tf = centered ? '' : val('transform');
         if (tf && (val('left') || val('right'))) {
             var ft = flipTransform(tf);
             if (ft) { out.push('transform:' + ft + imp('transform')); }

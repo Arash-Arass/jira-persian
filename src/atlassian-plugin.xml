@@ -144,6 +144,10 @@
     <resource type="i18n" name="atp-core-114" location="whisper-i18n"/>
     <resource type="i18n" name="atp-core-115" location="wiki-editor"/>
     <!-- /core -->
+    <!-- Development panel and development tools (bundled with every Jira) -->
+    <resource type="i18n" name="atp-dev-0" location="i18n-dev-status"/>
+    <resource type="i18n" name="atp-dev-1" location="i18n-smart-commits"/>
+    <resource type="i18n" name="atp-dev-2" location="i18n-release-report"/>
 
     <resource type="download" name="images/" location="images/"/>
 

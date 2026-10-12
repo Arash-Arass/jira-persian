@@ -397,7 +397,19 @@
         }).then(function () { return trForm(type); }).then(function (x) {
             var ok = 0, bad = [];
             items.forEach(function (i) { if (((x.map[i.id] || {}).name || '') === i.fa) { ok++; } else { bad.push(i.id); } });
-            return { ok: ok, bad: bad };
+            if (!bad.length) { return { ok: ok, bad: bad }; }
+            /* Jira stores nothing when the Persian name equals its own built-in Persian name; check what users actually see */
+            return fetch(CTX + '/rest/api/2/' + type, { credentials: 'same-origin', headers: { Accept: 'application/json' } })
+                .then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; }).then(function (list) {
+                    var shown = {};
+                    (list || []).forEach(function (c) { shown[String(c.id)] = c.name; });
+                    var still = [];
+                    bad.forEach(function (id) {
+                        var it = byId[id];
+                        if (it && (it.fa ? shown[id] === it.fa : true)) { ok++; } else { still.push(id); }
+                    });
+                    return { ok: ok, bad: still };
+                });
         });
     }
 
@@ -449,10 +461,13 @@
                 });
                 apply.disabled = true;
                 say('info', 'در حال ثبت ترجمه‌ها در Jira…');
-                Promise.all(TYPES.map(function (t) {
-                    var items = payload.filter(function (x) { return x.type === t.id; });
-                    return items.length ? trSave(t.id, items) : { ok: 0, bad: [] };
-                })).then(function (res) {
+                var res = [];
+                TYPES.reduce(function (chain, t) {
+                    return chain.then(function () {
+                        var items = payload.filter(function (x) { return x.type === t.id; });
+                        return items.length ? trSave(t.id, items) : { ok: 0, bad: [] };
+                    }).then(function (r) { res.push(r); });
+                }, Promise.resolve()).then(function () {
                     var ok = 0, bad = 0;
                     res.forEach(function (r) { ok += r.ok; bad += r.bad.length; });
                     if (bad) { say('err', bad.toLocaleString('fa-IR') + ' ترجمه ثبت نشد (' + ok.toLocaleString('fa-IR') + ' مورد ثبت شد). صفحه را تازه کنید و دوباره امتحان کنید.'); }

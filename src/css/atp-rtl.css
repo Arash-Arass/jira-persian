@@ -59,3 +59,15 @@ html.atp-rtl .sd-queues .aui-page-panel-nav > div[style*="left"] {
 
 /* Issue navigator: the filter-panel resize handle only understands left-to-right dragging */
 html.atp-rtl .navigator-sidebar > .ui-sidebar.ui-draggable { display: none; }
+
+/* AUI messages and flags: the icon sits on the right (logical inset), so the text keeps its space on the right too */
+html.atp-rtl .aui-message.aui-message { padding-right: 45px !important; }
+html.atp-rtl .aui-message.aui-message:not(.closeable) { padding-left: 20px !important; }
+
+/* JQL is code: it always reads left-to-right (board quick filters, card colours, swimlanes, filters) */
+html.atp-rtl :is([data-field-name="query"], [data-field-name="jql"], textarea[name="query"], textarea[name="jql"],
+                 input[name="jql"], .ghx-jql-preview, .jql-autocomplete-field) {
+    direction: ltr;
+    text-align: right;
+    unicode-bidi: isolate;
+}

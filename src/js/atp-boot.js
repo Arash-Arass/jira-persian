@@ -145,9 +145,13 @@
         'Select…': 'انتخاب کنید…',
         'No options': 'گزینه‌ای وجود ندارد',
         'Loading...': 'در حال بارگذاری…',
+        'Add': 'افزودن',
+        'Delete': 'حذف',
+        'Update': 'به‌روزرسانی',
+        'Cancel': 'لغو',
+        'Boards': 'بوردها',
+        'View all boards': 'مشاهده‌ی همه‌ی بوردها',
         'More': 'بیشتر',
-        'Boards': 'بردها',
-        'View all boards': 'مشاهده‌ی همه‌ی بردها',
         'Plans': 'برنامه‌ها',
         'View all plans': 'مشاهده‌ی همه‌ی برنامه‌ها',
         'Customer Portal': 'پورتال مشتریان',
@@ -168,6 +172,17 @@
         "Can't log in?": 'نمی‌توانید وارد شوید؟',
         "Welcome to the help center - we're here to help! Raise a request from the options provided.": 'به مرکز راهنما خوش آمدید؛ ما اینجا هستیم تا کمکتان کنیم! درخواست خود را از میان گزینه‌های زیر ثبت کنید.'
     };
+    /* ---------- AUI's own words (Add, Delete, Update…): AUI fills AJS.I18n.keys with English, so Persian users get ours ---------- */
+    var AUI_FA = {"aui.landmarks.site": "سایت", "aui.landmarks.sidebar": "نوار کناری", "aui.landmarks.page": "صفحه", "aui.landmarks.main": "اصلی", "aui.header.home.link": "رفتن به صفحه‌ی اصلی", "aui.dropdown.async.error": "خطا در بارگذاری منوی کشویی", "aui.dropdown.async.loading": "در حال بارگذاری منوی کشویی", "aui.words.expand": "باز کردن", "aui.words.collapse": "جمع کردن", "aui.words.add": "افزودن", "aui.words.update": "به‌روزرسانی", "aui.words.delete": "حذف", "aui.words.remove": "برداشتن", "aui.words.cancel": "لغو", "aui.words.loading": "در حال بارگذاری", "aui.words.close": "بستن", "aui.enter.value": "وارد کردن مقدار", "aui.words.more": "بیشتر", "aui.words.moreitem": "بیشتر…", "aui.keyboard.shortcut.type.x": "تایپ «{0}»", "aui.keyboard.shortcut.then.x": "سپس «{0}»", "aui.keyboard.shortcut.or.x": "یا «{0}»", "aui.sidebar.expand.tooltip": "باز کردن نوار کناری ( [ )", "aui.sidebar.collapse.tooltip": "جمع کردن نوار کناری ( [ )", "aui.validation.message.maxlength": "باید حداکثر {0} کاراکتر باشد", "aui.validation.message.minlength": "باید حداقل {0} کاراکتر باشد", "aui.validation.message.exactlength": "باید دقیقاً {0} کاراکتر باشد", "aui.validation.message.matchingfield": "{0} و {1} مطابقت ندارند.", "aui.validation.message.matchingfield-novalue": "این فیلدها مطابقت ندارند.", "aui.validation.message.doesnotcontain": "عبارت {0} را در این فیلد وارد نکنید", "aui.validation.message.pattern": "این فیلد با قالب موردنیاز مطابقت ندارد", "aui.validation.message.required": "این فیلد الزامی است", "aui.validation.message.validnumber": "لطفاً یک عدد معتبر وارد کنید", "aui.validation.message.min": "مقداری بزرگ‌تر یا مساوی {0} وارد کنید", "aui.validation.message.max": "مقداری کوچک‌تر یا مساوی {0} وارد کنید", "aui.validation.message.dateformat": "تاریخ معتبر وارد کنید", "aui.validation.message.minchecked": "حداقل {0,choice,0#۰ چک‌باکس|1#۱ چک‌باکس|1<{0,number} چک‌باکس} را علامت بزنید.", "aui.validation.message.maxchecked": "حداکثر {0,choice,0#۰ چک‌باکس|1#۱ چک‌باکس|1<{0,number} چک‌باکس} را علامت بزنید.", "aui.checkboxmultiselect.clear.selected": "پاک کردن موارد انتخاب‌شده", "aui.select.no.suggestions": "بدون پیشنهاد", "aui.select.number.suggestions": "{0,choice,0#۰ گزینه|1#۱ گزینه|1<{0,number} گزینه} پیدا شد.", "aui.select.new.suggestions": "پیشنهادهای جدید اضافه شد. برای انتخاب از کلیدهای جهت بالا و پایین استفاده کنید.", "aui.select.new.value": "مقدار جدید", "aui.toggle.on": "روشن", "aui.toggle.off": "خاموش", "aui.messagecomponent.error.label": "خطا", "aui.messagecomponent.warning.label": "هشدار", "aui.messagecomponent.info.label": "اطلاعات", "aui.messagecomponent.confirmation.label": "تأیید", "aui.messagecomponent.change.label": "تغییر", "aui.flag.default-aria-label.info": "پیام اطلاعاتی جدید", "aui.flag.default-aria-label.success": "پیام تأیید جدید", "aui.flag.default-aria-label.warning": "پیام هشدار جدید", "aui.flag.default-aria-label.error": "پیام خطای جدید"};
+    function patchAui() {
+        try {
+            var keys = w.AJS && w.AJS.I18n && w.AJS.I18n.keys;
+            if (!keys) { return false; }
+            for (var k in AUI_FA) { if (AUI_FA.hasOwnProperty(k)) { keys[k] = AUI_FA[k]; } }
+            return true;
+        } catch (e) { return false; }
+    }
+
     /* portal texts that Jira saved in English when the project was created (they carry the project's name) */
     var PATTERNS = [
         [/^Welcome! You can raise an? (.{1,120}) request from the options provided\.$/, 'خوش آمدید! درخواست خود را برای $1 از میان گزینه‌های زیر ثبت کنید.']
@@ -302,6 +317,7 @@
             d.body.classList.toggle('atp-login', /\/(login\.jsp|secure\/admin\/WebSudoAuthenticate|secure\/ForgotLoginDetails)/.test(w.location.pathname));
         }
         root.classList.toggle('atp-fa', isFa);
+        if (isFa) { patchAui(); }
         root.classList.toggle('atp-font', S.font !== 'system' && (isFa || S.fontEveryone));
         root.classList.toggle('atp-bidi', !!S.smartBidi || isFa);
         var rtl = isFa && (isPortal ? S.rtlPortal : S.rtlAgent);

@@ -41,20 +41,24 @@
 </div>
 
 ```bash
-# 1) Jira را متوقف کنید
+# 0) the jar is in your home folder on the server (e.g. scp arasstech-persian-jsm-1.2.0.jar USER@SERVER:)
+P=/var/atlassian/application-data/jira/plugins/installed-plugins   # <jira-home>/plugins/installed-plugins
+
+# 1) stop Jira
 sudo systemctl stop jira
 
-# 2) نسخه‌ی قبلی افزونه را (اگر هست) بردارید و نسخه‌ی جدید را کپی کنید
-cd /var/atlassian/application-data/jira/plugins/installed-plugins/
-sudo rm -f arasstech-persian-jsm-*.jar
-sudo cp ~/arasstech-persian-jsm-1.2.0.jar .
-sudo chown jira:jira arasstech-persian-jsm-1.2.0.jar
+# 2) remove the previous version (if any) and install the new one
+sudo sh -c "rm -f $P/arasstech-persian-jsm-*.jar"
+sudo install -o jira -g jira -m 644 ~/arasstech-persian-jsm-1.2.0.jar "$P"/
+sudo ls -l "$P" | grep arasstech
 
-# 3) Jira را روشن کنید
+# 3) start Jira
 sudo systemctl start jira
 ```
 
 <div dir="rtl">
+
+همه‌ی دستورها را با همان کاربری بزنید که فایل را در پوشه‌ی خانگی‌اش گذاشته‌اید. اگر Jira به‌صورت سرویس `jira` نصب نشده، به‌جای `systemctl` از `sudo /opt/atlassian/jira/bin/stop-jira.sh` و `sudo -u jira /opt/atlassian/jira/bin/start-jira.sh` استفاده کنید.
 
 بعد از بالا آمدن Jira، هر کاربر از **پروفایل ← ترجیحات ← زبان** گزینه‌ی **Persian (Iran)** را انتخاب می‌کند.
 
