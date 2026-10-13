@@ -555,12 +555,309 @@
         }
     }
 
+    /* ================= Jalali display of dates written as plain text =================
+       Jira Software, reports, gadgets and the work log print Gregorian dates as text ("12/Oct/26 11:46 PM",
+       "Oct 12", "14 Sep 2026") and durations as "1w 3d". Persian users get them in Jalali / Persian. */
+    var EN_MON = EN_LONG.concat(EN_SHORT, ['Sept']);
+    var MON_RE = '(' + EN_MON.join('|') + ')';
+    var AMPM = '(?:\\s*([AaPp]\\.?[Mm]\\.?))';
+    var TIME_RE = '(?:[ ,]+(\\d{1,2}):(\\d{2})' + AMPM + '?)?';
+    var RX_DMY = new RegExp('\\b(\\d{1,2})[\\/\\-. ]' + MON_RE + '[\\/\\-. ,]+(\\d{4}|\\d{2})\\b' + TIME_RE, 'g');
+    var RX_MDY = new RegExp('\\b' + MON_RE + '\\.? (\\d{1,2})(?:st|nd|rd|th)?(?:,? (\\d{4}))?\\b' + TIME_RE, 'g');
+    var RX_DM = new RegExp('\\b(\\d{1,2})[\\/\\- ]' + MON_RE + '\\b', 'g');
+    var RX_MY = new RegExp('\\b' + MON_RE + '[ \\/\\-](\\d{4})\\b', 'g');
+    var RX_ISO = /\b(20\d{2}|19\d{2})-(\d{2})-(\d{2})\b/g;
+    var RX_AMPM = new RegExp('\\b(\\d{1,2}):(\\d{2})' + AMPM + '(?![A-Za-z])', 'g');
+    var RX_WDAY = new RegExp('\\b(' + EN_DAYS.join('|') + '|' + EN_DAYS.map(function (x) { return x.slice(0, 3); }).join('|') + ')\\b(?=,?\\s+\\d)', 'g');
+    var RX_DUR = /^(\s*[(:\u060c]?\s*)((?:\d+(?:[.,]\d+)?\s?[wdhm]\s*)+)(\)?\s*)$/;
+    var DUR_UNIT = { w: 'هفته', d: 'روز', h: 'ساعت', m: 'دقیقه' };
+    var FA_WEEKDAYS = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'];
+    var QUICK = new RegExp(MON_RE + '|\\d:\\d\\d\\s*[AaPp]|\\d\\s?[wdhm]\\b|\\b(?:19|20)\\d\\d-\\d\\d-\\d\\d\\b');
+
+    function monNum(s) {
+        var t = s.toLowerCase().slice(0, 3);
+        for (var i = 0; i < 12; i++) { if (EN_SHORT[i].toLowerCase() === t) { return i + 1; } }
+        return 0;
+    }
+    function hhmm(h, mi, ap) {
+        h = +h;
+        if (ap) { var pm = /^p/i.test(ap); h = (h % 12) + (pm ? 12 : 0); }
+        return faNum(pad(h) + ':' + mi);
+    }
+    function jDate(gy, gm, gd, withYear) {
+        if (!gm || gd < 1 || gd > 31) { return null; }
+        var j = toJalali(gy, gm, gd);
+        return faNum(j.jd) + ' ' + J_MONTHS[j.jm - 1] + (withYear ? ' ' + faNum(j.jy) : '');
+    }
+    function guessYear(gm, gd) {
+        var now = new Date(), y = now.getFullYear(), dt = new Date(y, gm - 1, gd);
+        if (dt - now > 183 * 864e5) { y--; } else if (now - dt > 183 * 864e5) { y++; }
+        return y;
+    }
+    function monthSpan(gy, gm, sep) {
+        var a = toJalali(gy, gm, 1), b = toJalali(gy, gm, new Date(gy, gm, 0).getDate());
+        return a.jy === b.jy ? J_MONTHS[a.jm - 1] + sep + J_MONTHS[b.jm - 1] + ' ' + faNum(a.jy)
+                             : J_MONTHS[a.jm - 1] + ' ' + faNum(a.jy) + sep + J_MONTHS[b.jm - 1] + ' ' + faNum(b.jy);
+    }
+    function withTime(txt, h, mi, ap) { return h ? txt + '، ' + hhmm(h, mi, ap) : txt; }
+    function persianDates(s) {
+        if (!s || !QUICK.test(s)) { return s; }
+        var out = s.replace(RX_DMY, function (m, dd, mon, yy, h, mi, ap) {
+            var y = yy.length === 2 ? 2000 + (+yy) : +yy, r = jDate(y, monNum(mon), +dd, true);
+            return r ? withTime(r, h, mi, ap) : m;
+        });
+        out = out.replace(RX_MDY, function (m, mon, dd, yy, h, mi, ap) {
+            var gm = monNum(mon), r = jDate(yy ? +yy : guessYear(gm, +dd), gm, +dd, !!yy);
+            return r ? withTime(r, h, mi, ap) : m;
+        });
+        out = out.replace(RX_DM, function (m, dd, mon) {
+            var gm = monNum(mon);
+            return jDate(guessYear(gm, +dd), gm, +dd, false) || m;
+        });
+        out = out.replace(RX_MY, function (m, mon, yy) { return monthSpan(+yy, monNum(mon), '–'); });
+        out = out.replace(RX_ISO, function (m, y, mo, dd) { return jDate(+y, +mo, +dd, true) || m; });
+        out = out.replace(RX_WDAY, function (m, wd) {
+            for (var i = 0; i < 7; i++) { if (EN_DAYS[i].slice(0, 3).toLowerCase() === wd.slice(0, 3).toLowerCase()) { return FA_WEEKDAYS[i]; } }
+            return m;
+        });
+        return out.replace(RX_AMPM, function (m, h, mi, ap) { return hhmm(h, mi, ap); });
+    }
+    function persianDuration(s) {
+        var m = RX_DUR.exec(s);
+        if (!m) { return s; }
+        var re = /(\d+(?:[.,]\d+)?)\s?([wdhm])/g, x, res = [];
+        while ((x = re.exec(m[2]))) { res.push(faNum(x[1].replace(/[.,]/, '٫')) + ' ' + DUR_UNIT[x[2]]); }
+        return res.length ? m[1] + res.join(' و ') + m[3] : s;
+    }
+
+    var TX_SKIP = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, INPUT: 1, SELECT: 1, OPTION: 1, CODE: 1, PRE: 1, NOSCRIPT: 1, KBD: 1, SAMP: 1 };
+    var TX_ATTRS = ['title', 'data-tooltip', 'original-title', 'aria-label'];
+    function skipEl(el) {
+        for (var e = el, i = 0; e && e.nodeType === 1 && i < 12; e = e.parentNode, i++) {
+            if (TX_SKIP[e.nodeName] || e.isContentEditable) { return true; }
+            var c = typeof e.className === 'string' ? e.className : '';
+            if (/\b(jql|CodeMirror|atp-jdp)/.test(c)) { return true; }
+        }
+        return false;
+    }
+    /* English words that sit inside Persian sentences (locked Jira Software field names, role names, product words) */
+    var PHRASES = [[/Story Points|Story points|STORY POINTS/g, 'امتیاز استوری'], [/\(Administrators\)/g, '(مدیران)'],
+                   [/ساده‌شده‌ی Software/g, 'ساده‌شده'], [/\(Epic Link\)/g, '(پیوند اپیک)'], [/\(Sprint\)/g, '(اسپرینت)'],
+                   [/\(GMT([+\-]\d{1,2}:\d{2})\)/g, function (m, z) { return '(گرینویچ ' + faNum(z) + ')'; }],
+                   [/^Scheme: /, 'طرح: '], [/URL فید/g, 'نشانی فید'], [/Field Creation/g, 'ایجاد فیلد'], [/Default Notification Scheme/g, 'طرح اعلان پیش‌فرض'], [/Default Field Configuration/g, 'پیکربندی فیلد پیش‌فرض'],
+                   [/>To Do</g, '>برای انجام<'], [/>In Progress</g, '>در حال انجام<'], [/>Done</g, '>انجام‌شده<'],
+                   [/This issue is being actively worked on at the moment by the assignee\./g, 'مسئول در حال حاضر روی این مسئله کار می‌کند.'],
+                   [/The issue is open and ready for the assignee to start work on it\./g, 'مسئله باز است و آماده‌ی شروع کار توسط مسئول.'],
+                   [/^دریافت راهنمای آنلاین درباره‌ی [\x20-\x7E]+$/, 'دریافت راهنمای آنلاین']];
+    /* help icons carry the English title of the Atlassian page they open */
+    function helpTitle(el, a) {
+        if (!/^[\x20-\x7E]+$/.test(a) || !/[A-Za-z]{3}/.test(a)) { return a; }
+        var h = el.closest ? el.closest('a') : null, href = h ? (h.getAttribute('href') || '') : '';
+        if (/docs\.atlassian|confluence\.atlassian|atlassian\.com|\/help/.test(href) || /help/i.test((el.className && el.className.baseVal === undefined ? el.className : '') + ' ' + (h ? h.className : ''))) { return 'راهنمای آنلاین'; }
+        return a;
+    }
+    function phrases(v) {
+        if (!/[A-Za-z]{3}/.test(v)) { return v; }
+        for (var i = 0; i < PHRASES.length; i++) { v = v.replace(PHRASES[i][0], PHRASES[i][1]); }
+        return v;
+    }
+    var RX_COLOR = /^\s*([^\x00-\x7F][^]*?)\s+color\s*$/;
+    var RX_ICON_TITLE = /^\s*(Created with Sketch\.?|icon[\w\-]*|[\w\-]+\.svg)\s*$/;
+    var RX_EN_DUR = /(\d+(?:\.\d+)?)\s(week|day|hour|minute|second)s?\b(,\s?)?/gi;
+    var EN_DUR_FA = { week: 'هفته', day: 'روز', hour: 'ساعت', minute: 'دقیقه', second: 'ثانیه' };
+    var RX_DUR_INLINE = /\b\d+[wdhm](?:\s+\d+[wdhm])+\b/g;
+    var RX_FA_DUR = /(\d+(?:[.,]\d+)?)(\s(?:هفته|روز|ساعت|دقیقه|ثانیه))(,\s?)?/g;
+    var RX_NUM_ONLY = /^\s*[+\-]?\d[\d.,]*\s*%?\s*$/;
+    /* read-only places (dashboard gadgets, Jira Software reports): every number is shown with Persian digits.
+       Elsewhere plain numbers stay as they are, because some Jira scripts read them back from the page. */
+    var RX_KEY = /\b[A-Z][A-Z0-9_]+-\d+\b|\bv?\d+\.\d+\.\d+\b/;
+    var DISPLAY = '.dashboard-item-content, .gadget, .ghx-report-content, #ghx-chart-view, #ghx-chart-data, #ghx-chart-header, #ghx-chart-legend, .ghx-sprint-report, .ghx-chart-data';
+    function inDisplay(p) {
+        var doc = p.ownerDocument;
+        if (doc && doc.__atpGadget) { return !(p.closest && p.closest('a[href*="/browse/"]') && RX_KEY.test(p.textContent)); }
+        return !!(p.closest && p.closest(DISPLAY));
+    }
+    function inChart(p) {
+        return !!(p.closest && p.closest('svg, .tickLabel, .flot-text, .flot-tick-label, .ghx-chart-axis'));
+    }
+    /* JQL shown as text (quick filters, filters) is code: never touch it */
+    var RX_JQL = /\b(AND|OR|ORDER BY|is (?:not )?EMPTY|in \(|not in|currentUser\(\)|openSprints\(\)|now\(\))|\s(?:=|!=|~|>=|<=|<|>)\s/;
+    function convText(node) {
+        var v = node.nodeValue;
+        if (!v || v.length > 400 || !/[A-Za-z0-9]/.test(v)) { return; }
+        if (RX_JQL.test(v)) { return; }
+        var p = node.parentNode;
+        if (!p || skipEl(p)) { return; }
+        var r = persianDuration(v);
+        if (r === v) { r = persianDates(v); }
+        if (/[dMy]{1,4}\/[dMy]{1,4}\/[dMy]{1,4}/.test(r)) {                 /* "(d/MMM/yy)" hints beside date fields */
+            r = r.replace(/\(?\s*d{1,2}\/M{1,4}\/y{2,4}(?:\s+h{1,2}:mm\s*a)?\s*\)?/g, function (m) { return '(مثلاً ' + faNum(25) + ' مهر ' + faNum(1405) + ')'; });
+        }
+        if (RX_EN_DUR.test(r)) {                                          /* "1 day, 2 hours" */
+            RX_EN_DUR.lastIndex = 0;
+            r = r.replace(RX_EN_DUR, function (m, n, unit, comma) { return n + ' ' + EN_DUR_FA[unit.toLowerCase()] + (comma ? ', ' : ''); });
+        }
+        RX_EN_DUR.lastIndex = 0;
+        if (RX_DUR_INLINE.test(r)) { RX_DUR_INLINE.lastIndex = 0; r = r.replace(RX_DUR_INLINE, function (m) { return persianDuration(m); }); }
+        RX_DUR_INLINE.lastIndex = 0;
+        if (/\d\s(?:هفته|روز|ساعت|دقیقه|ثانیه)/.test(r)) {             /* server's own durations: "4 روز, 1 ساعت" */
+            r = r.replace(RX_FA_DUR, function (m, n, unit, comma) { return faNum(n.replace(/[.,]/, '٫')) + unit + (comma ? ' و ' : ''); });
+        }
+        if ((RX_NUM_ONLY.test(r) || /^\s*\d{1,2}:\d{2}\s*$/.test(r)) && inChart(p)) { r = faNum(r).replace(/(\d)\.(\d)/g, '$1٫$2'); }   /* chart axes and labels */
+        else if (/\d/.test(r) && inDisplay(p) && !RX_KEY.test(r)) { r = faNum(r).replace(/([۰-۹])\.([۰-۹])/g, '$1٫$2').replace(/%/g, '٪'); }   /* gadgets and reports only show numbers */
+        if (RX_COLOR.test(r)) { r = r.replace(RX_COLOR, 'رنگ $1'); }
+        r = phrases(r);                                       /* gadget colour menu: "آبی color" */
+        if (p.nodeName.toLowerCase() === 'title' && RX_ICON_TITLE.test(r)) { r = ''; }                   /* "Created with Sketch." tooltips */
+        if (r !== v) { node.nodeValue = r; }
+    }
+    function convAttrs(el) {
+        if (el.nodeType !== 1 || TX_SKIP[el.nodeName]) { return; }
+        for (var i = 0; i < TX_ATTRS.length; i++) {
+            var a = el.getAttribute(TX_ATTRS[i]);
+            if (a && QUICK.test(a)) { var r = persianDates(a); if (r !== a) { el.setAttribute(TX_ATTRS[i], r); } }
+            else if (a && RX_COLOR.test(a)) { el.setAttribute(TX_ATTRS[i], a.replace(RX_COLOR, 'رنگ $1')); }
+            else if (a && !RX_JQL.test(a)) { var ph = phrases(a); if (TX_ATTRS[i] === 'title') { ph = helpTitle(el, ph); } if (ph !== a) { el.setAttribute(TX_ATTRS[i], ph); } }
+        }
+    }
+    /* jQuery UI date pickers (Jira Software reports): Jalali day numbers, month titles and week days */
+    var WD_FA = { su: 'ی', mo: 'د', tu: 'س', we: 'چ', th: 'پ', fr: 'ج', sa: 'ش' };
+    function jqPicker(box) {
+        var cells = box.querySelectorAll('td[data-month][data-year]');
+        for (var i = 0; i < cells.length; i++) {
+            var a = cells[i].querySelector('a, span');
+            if (!a || a.getAttribute('data-atp-g')) { continue; }
+            var gd = +enNum(a.textContent), gy = +cells[i].getAttribute('data-year'), gm = +cells[i].getAttribute('data-month') + 1;
+            if (!gd) { continue; }
+            a.setAttribute('data-atp-g', String(gd));
+            a.title = jDate(gy, gm, gd, true) || '';
+            a.textContent = faNum(toJalali(gy, gm, gd).jd);
+        }
+        var titles = box.querySelectorAll('.ui-datepicker-title');
+        for (var t = 0; t < titles.length; t++) {
+            var tt = titles[t];
+            if (tt.getAttribute('data-atp-j') === tt.textContent) { continue; }
+            var mon = tt.querySelector('.ui-datepicker-month'), yr = tt.querySelector('.ui-datepicker-year');
+            var mt = mon ? (mon.tagName === 'SELECT' ? (mon.options[mon.selectedIndex] || {}).text || '' : mon.textContent) : '';
+            var yt = yr ? (yr.tagName === 'SELECT' ? (yr.options[yr.selectedIndex] || {}).text || '' : yr.textContent) : '';
+            var gm2 = monNum(mt || ''), gy2 = +enNum(yt || '');
+            if (gm2 && gy2 && !tt.querySelector('select')) {
+                tt.textContent = monthSpan(gy2, gm2, ' – ');
+                tt.setAttribute('data-atp-j', tt.textContent);
+            }
+        }
+        var heads = box.querySelectorAll('thead th');
+        for (var h = 0; h < heads.length; h++) {
+            var el = heads[h].querySelector('span') || heads[h];
+            var k = (el.getAttribute('title') || el.textContent || '').trim().slice(0, 2).toLowerCase();
+            if (WD_FA[k] && el.children.length === 0) { el.textContent = WD_FA[k]; }
+        }
+        var nav = box.querySelectorAll('.ui-datepicker-prev span, .ui-datepicker-next span, .ui-datepicker-prev, .ui-datepicker-next');
+        for (var n = 0; n < nav.length; n++) {
+            var tx = (nav[n].getAttribute('title') || '').trim();
+            if (/^Prev$/i.test(tx)) { nav[n].setAttribute('title', 'قبلی'); } else if (/^Next$/i.test(tx)) { nav[n].setAttribute('title', 'بعدی'); }
+            if (nav[n].children.length === 0) {
+                if (/^Prev$/i.test(nav[n].textContent)) { nav[n].textContent = 'قبلی'; } else if (/^Next$/i.test(nav[n].textContent)) { nav[n].textContent = 'بعدی'; }
+            }
+        }
+        var sels = box.querySelectorAll('select.ui-datepicker-month option');
+        for (var o = 0; o < sels.length; o++) {
+            var gmo = monNum(sels[o].text);
+            if (gmo && !sels[o].getAttribute('data-atp-j')) {
+                var oa = toJalali(2026, gmo, 1), ob = toJalali(2026, gmo, new Date(2026, gmo, 0).getDate());
+                sels[o].setAttribute('data-atp-j', '1');
+                sels[o].text = J_MONTHS[oa.jm - 1] + '–' + J_MONTHS[ob.jm - 1];
+            }
+        }
+    }
+    function convTree(rootNode) {
+        if (!rootNode) { return; }
+        if (rootNode.nodeType === 3) { convText(rootNode); return; }
+        if (rootNode.nodeType !== 1 || TX_SKIP[rootNode.nodeName]) { return; }
+        var doc = rootNode.ownerDocument || d;
+        var own = rootNode.closest ? rootNode.closest('.ui-datepicker') : null;
+        if (own) { jqPicker(own); }
+        var pickers = rootNode.querySelectorAll ? rootNode.querySelectorAll('.ui-datepicker') : [];
+        for (var p = 0; p < pickers.length; p++) { jqPicker(pickers[p]); }
+        if (skipEl(rootNode)) { return; }
+        convAttrs(rootNode);
+        var tw = doc.createTreeWalker(rootNode, 5, {
+            acceptNode: function (n) { return n.nodeType === 1 && (TX_SKIP[n.nodeName] || n.isContentEditable) ? 2 : 1; }
+        }), n;
+        while ((n = tw.nextNode())) { if (n.nodeType === 3) { convText(n); } else { convAttrs(n); } }
+    }
+    var txQueue = [], txQueued = false;
+    function txFlush() {
+        txQueued = false;
+        var q = txQueue; txQueue = [];
+        for (var i = 0; i < q.length; i++) { try { convTree(q[i]); } catch (e) { /* never break Jira */ } }
+    }
+    function txPush(n) {
+        txQueue.push(n);
+        if (!txQueued) { txQueued = true; w.setTimeout(txFlush, 30); }
+    }
+    function watchTextIn(doc) {
+        if (!doc || !doc.body || doc.__atpTx) { return; }
+        doc.__atpTx = true;
+        try { convTree(doc.body); } catch (e) { /* never break Jira */ }
+        var MO = (doc.defaultView && doc.defaultView.MutationObserver) || w.MutationObserver;
+        if (!MO) { return; }
+        new MO(function (muts) {
+            for (var i = 0; i < muts.length; i++) {
+                var m = muts[i];
+                if (m.type === 'characterData' || m.type === 'attributes') { txPush(m.target); }
+                else { for (var j = 0; j < m.addedNodes.length; j++) { txPush(m.addedNodes[j]); } }
+            }
+        }).observe(doc.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: TX_ATTRS });
+    }
+    /* gadgets run in same-origin frames; a frame without our scripts is converted from here */
+    function watchFrameTexts() {
+        var frames = d.querySelectorAll('iframe');
+        for (var i = 0; i < frames.length; i++) {
+            var f = frames[i], doc;
+            if (/tox-edit-area|_ifr$/.test((f.className || '') + ' ' + (f.id || ''))) { continue; }      /* rich-text editors */
+            if (!f.__atpTxLoad) { f.__atpTxLoad = true; f.addEventListener('load', function () { w.setTimeout(watchFrameTexts, 300); }); }
+            try { doc = f.contentDocument; } catch (e) { continue; }
+            if (!doc || !doc.body || doc.__atpTx || (doc.documentElement && doc.documentElement.getAttribute('data-atp'))) { continue; }
+            if (doc.readyState !== 'complete' && !doc.body.firstChild) { continue; }      /* about:blank before the gadget loads */
+            if (/gadget/i.test((f.className || '') + ' ' + (f.id || '') + ' ' + (f.name || '')) || (f.closest && f.closest('.dashboard-item-frame, .gadget, .dashboard-item-content'))) { doc.__atpGadget = true; }
+            watchTextIn(doc);
+        }
+    }
+
+    /* time fields accept only "3w 4d 12h": Persian digits and unit words typed by users are written back that way */
+    var RX_TIME_FIELD = /timeLogged|timetracking|Estimate|adjustmentAmount|timeSpent/i;
+    var FA_UNIT = { 'هفته': 'w', 'روز': 'd', 'ساعت': 'h', 'دقیقه': 'm' };
+    function normalizeDuration(v) {
+        if (!v || !/[۰-۹٠-٩]|هفته|روز|ساعت|دقیقه/.test(v)) { return v; }
+        return enNum(v).replace(/٫/g, '.')
+            .replace(/(\d+(?:\.\d+)?)\s*(هفته|روز|ساعت|دقیقه)/g, function (m, n, u) { return n + FA_UNIT[u]; })
+            .replace(/\s*(?:،|,|\bو\b|\sو\s)\s*/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+    function onTimeField(e) {
+        var t = e.target;
+        if (t && t.tagName === 'INPUT' && RX_TIME_FIELD.test((t.name || '') + ' ' + (t.id || ''))) {
+            var n = normalizeDuration(t.value);
+            if (n !== t.value) { t.value = n; }
+        }
+        if (t && t.tagName === 'FORM') {
+            var list = t.querySelectorAll('input');
+            for (var i = 0; i < list.length; i++) {
+                if (RX_TIME_FIELD.test((list[i].name || '') + ' ' + (list[i].id || ''))) { var v = normalizeDuration(list[i].value); if (v !== list[i].value) { list[i].value = v; } }
+            }
+        }
+    }
+
     /* ================= wiring ================= */
     var queued = false;
     function sweep() {
         queued = false;
         wrapCalendarSetup();
-        if (opt('jalali', true)) { convertTimes(); }
+        if (opt('jalali', true)) {
+            if (!d.__atpGadget) {                                       /* this page is itself a dashboard gadget */
+                try { var fe = w.frameElement; if (fe && (/gadget/i.test((fe.className || '') + ' ' + (fe.id || '') + ' ' + (fe.name || '')) || (fe.closest && fe.closest('.dashboard-item-frame, .gadget, .dashboard-item-content')))) { d.__atpGadget = true; } } catch (e) { /* cross-origin parent */ }
+            }
+            convertTimes(); watchTextIn(d); watchFrameTexts();
+        }
         if (!opt('jalaliPicker', true) && !opt('jalali', true)) { return; }
         var inputs = d.querySelectorAll('input.datepicker-input, input[id="duedate"], .aui-field-datepicker input, input.trigger-date-picker, input.date-picker[data-ifformat]');
         for (var i = 0; i < inputs.length; i++) {
@@ -576,7 +873,7 @@
     function queue() {
         if (queued) { return; }
         queued = true;
-        (w.requestAnimationFrame || w.setTimeout)(sweep);
+        w.setTimeout(sweep, 30);
     }
 
     function start() {
@@ -588,6 +885,9 @@
             d.addEventListener('focusin', onFocusIn, true);
             d.addEventListener('focus', onFocusIn, true);                 /* jQuery focus handlers bound on the field itself */
         }
+        d.addEventListener('change', onTimeField, true);
+        d.addEventListener('blur', onTimeField, true);
+        d.addEventListener('submit', onTimeField, true);
         sweep();
         if (w.MutationObserver && d.body) {
             new MutationObserver(function (muts) {
@@ -599,7 +899,7 @@
     }
 
     w.ATP = w.ATP || {};
-    w.ATP.dates = { start: start, toJalali: toJalali, toGregorian: toGregorian, strftime: strftime, strptime: strptime, jMonthLength: jMonthLength };
+    w.ATP.dates = { start: start, toJalali: toJalali, toGregorian: toGregorian, strftime: strftime, strptime: strptime, jMonthLength: jMonthLength, text: persianDates, duration: persianDuration, normalizeDuration: normalizeDuration };
 
     wrapCalendarSetup();
     if (d.readyState === 'loading') { d.addEventListener('DOMContentLoaded', start); } else { start(); }
